@@ -19,7 +19,7 @@ class Player {
     
     //collision
     int hitboxh, hitboxw;
-    int attackhitboxW;
+    int attackhitboxX;
     
     //debug
     boolean showAllFrames;
@@ -47,7 +47,7 @@ class Player {
         //collision
         hitboxh = 40;
         hitboxw = 15;
-        attackhitboxW = 20;
+        attackhitboxX = 15;
     
     
         
@@ -84,10 +84,10 @@ class Player {
 
         if (attack) {
             if (directionFacing == false){
-                rect(xPos+((attackhitboxW)*-1), yPos, attackhitboxW, hitboxh);
+                rect(xPos+((attackhitboxX-5)*-1), yPos, 10, hitboxh);
             }
             else {
-                rect(xPos+hitboxw, yPos, attackhitboxW, hitboxh);
+                rect(xPos+attackhitboxX, yPos, 10, hitboxh);
             }
             
         }
