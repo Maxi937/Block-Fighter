@@ -29,19 +29,21 @@ class Player {
     //---methods---//
     void display() {
         //draw hitbox
-        rect(xpos + 15, ypos + 5, hitboxw, hitboxh);
+        rect(xpos, ypos, hitboxw, hitboxh);
         
-        
-        //draw character model
+        //draw character model - character model follows hitbox
         for (int i = 0; i < 18; i++) {
-            image(playerImages.get(0),xpos,ypos);
+            image(playerImages.get(0),xpos-hitboxw,ypos-5);
         }
     }
     
     void debugdisplayspritesheet(int numofimages) {
         //will display character sprite sheet on top of screen
+
+        //46 x 50 was the size of each tile on the sprite sheet, this should be changed to a variable so it works if the class is extended
         int scaleX = 46;
         int scaleY = 50;
+
         int imgtoprint = 0;
         float y;
         float x;
@@ -54,7 +56,7 @@ class Player {
         column = 0;
         
         for (int i = 0; i <= numofimages; i++) {
-            //background(255); 
+            //if the sprite sheet displays pass the screen size - start a new row offset by size of tile
             if (x >= width - 100) {
                 row = row + 1;
                 column = 0;
@@ -64,8 +66,7 @@ class Player {
             x = column * scaleX;
             y = scaleY * row;
             
-            
-            //Draw Shapes
+            //Draw Shape
             image(playerImages.get(imgtoprint),x,y);
             imgtoprint = imgtoprint + 1;
         }

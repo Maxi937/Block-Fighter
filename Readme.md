@@ -34,6 +34,12 @@ Description: Player must kill enemies and avoid blocks falling from the sky
 
 ## TODO
 
+### Code
+
+- [ ] Further break down the SpriteSheet image Array so that there are points for different elements. For Example:
+  - Main Character is playerImages[0] - playerImages[18]. Would like to reference this part of the array using a SpriteSheet(mainCharacter) - this is only relevant for the debugger right now.
+  - Could add different arrays completely for different actors - this defeats the purpose of the image loader though
+
 ### Music
 
 - [ ] Find Music Files:
