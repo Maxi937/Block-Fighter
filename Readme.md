@@ -65,6 +65,7 @@ Description: Player must kill enemies and avoid blocks falling from the sky
 - [ ] Movement
 - [ ] Death
 - [ ] Collision
+- [ ] Take Damage
 
 ### Game
 
@@ -72,10 +73,11 @@ Description: Player must kill enemies and avoid blocks falling from the sky
 - [ ] Win Condition
 - [ ] Lose Condition
 - [ ] Block Falling
+- [ ] Difficulty Modifier - take input
 
 ### Enemy
 
-- [ ] Enemy Class - Should inherit from Player (later to be pawn class)
+- [ ] Enemy Class
 - [ ] Sprite
 - [ ] Animations
   - [ ] Walk

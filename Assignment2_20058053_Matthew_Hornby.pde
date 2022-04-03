@@ -1,6 +1,7 @@
 import java.io.*;
 
 Player p;
+Game g;
 
 //images
 ArrayList<PImage> playerImages;
@@ -16,9 +17,17 @@ void setup() {
     size(800, 600);
     background(255);
     
+    //Set FilePaths
     filepathSpriteSheets = sketchPath() + "\\assets\\Spritesheets\\";
+
+    //Load assets
     loadSpritesheets(filepathSpriteSheets);
-    
+
+    //Game
+    g = new Game();
+
+
+    //Create Player
     p = new Player();
 }
 
@@ -26,13 +35,7 @@ void draw() {
     background(255);
     p.hitboxcolour(0,0,255,0);
     p.display();
-    
-    if (keyPressed) {
-        if (key == 'D') {
-            p.debugdisplayspritesheet(playerImages.size() - 1);
-        }
-    }
-    
+    g.drawBorder();
 }
 
 ArrayList<PImage> loadSpritesheets(String directory) {
