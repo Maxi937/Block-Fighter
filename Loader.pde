@@ -4,6 +4,7 @@ class Loader {
     private String[] nameAssetFolders;
     private int numofAssetFolders;
     private int totalImages;
+    PImage[] imageArray;
     
     
     
@@ -17,7 +18,7 @@ class Loader {
     //---METHODS---//
     
     //Load Image Array
-    public PImage[] loadSpritesheets(String spriteSheetDirectory, PImage[] imageArray) {
+    public PImage[] loadSpritesheets(String spriteSheetDirectory) {
         /*
         This method takes in a Directory & an Array.
         finds the number of folders in the Directory.
@@ -26,6 +27,7 @@ class Loader {
         This Array will be referenced later to display animations for game elements.
         The frames inside each folder must have the same name as the folder they are in with the frame suffix. 
         */
+        imageArray = new PImage[0];
         
         print("\nDirectory: ", spriteSheetDirectory);
         
@@ -103,6 +105,10 @@ class Loader {
     //getters
     public int getNumofImagesInArray(PImage[] imageArray) {
         return imageArray.length;
+    }
+
+    public PImage[] getImageArray() {
+       return imageArray;
     }
     
     //setters

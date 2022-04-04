@@ -3,46 +3,48 @@ class Enemy{
     //---PROPERTIES---//
     
     //position
-    float xPos, yPos;
+    private float xPos, yPos;
+    private float pXpos;
     
     //game
-    int health;
+    private int health;
     
     //movement
-    float maxSpeed, speedX, speedY;
-    boolean left, right, up;
+    private float maxSpeed, speedX, speedY;
+    private boolean left, right, up;
     
     //animation properties
-    PImage[] playerImages;
-    int currentFrame, loopFrames, frameOffset, delay;
-    boolean directionFacing;
-    boolean idle;
-    boolean attack;
+    private PImage[] enemyImages;
+    private int currentFrame, loopFrames, frameOffset, delay;
+    private boolean idle;
+    private boolean attack;
+    private boolean directionFacing;
     
     //collision
-    int hitboxh, hitboxw;
-    int attackhitboxW;
+    private int hitboxh, hitboxw;
+    private int attackhitboxW;
+    private boolean onHit;
+
+    //brain
+    private float distance;
+    private float target;
     
     //debug
-    boolean showAllFrames;
+    private boolean showAllFrames;
     
     //---CONSTRUCTOR---//
     
     Enemy() {
-        //starting Position
-        xPos = 200;
-        yPos = height - 150;
-        
         //movement
-        maxSpeed = 2;
+        maxSpeed = 1.5;
         speedX = 0;
         speedY = 0;
         
         //animation
+        enemyImages = l.getImageArray();
         loopFrames = 0;
         delay = 0;
-        directionFacing = true;
-        
+    
         //game variables
         health = 100;
         
@@ -53,6 +55,11 @@ class Enemy{
         
         //debug
         showAllFrames = false;
+
+        //starting Position
+        xPos = 600;
+        yPos = level.getScreenBottom() - hitboxh;
+        pXpos = xPos;
     }
     
     //---METHODS---//
@@ -65,11 +72,13 @@ class Enemy{
     
     //update character ie. update health and movement position, animation state
     public void update() {
-        //animation();
-        //controls();
+        animation();
+        controller();
+        brain();
+        print("\nXpos: ", xPos, "\tpXpos: ",pXpos);
     }
     
-    private void controls() {
+    private void controller() {
         if (left) {
             speedX = -maxSpeed;
             xPos = xPos + speedX;
@@ -97,7 +106,7 @@ class Enemy{
     
     // animations
     private void animation() {
-        if (xPos == xPos) {
+        if (pXpos == xPos) {
             idle = true;
         }
         
@@ -130,7 +139,7 @@ class Enemy{
         }
 
         //running
-        if (right) {
+        if (pXpos < xPos) {
             frameOffset = 42;
             loopFrames = 7;
             idle = false;
@@ -138,7 +147,7 @@ class Enemy{
             attack = false;
             }
             
-            if (left) {
+            if (pXpos > xPos) {
             frameOffset = 50;
             loopFrames = 7;
             idle = false;
@@ -149,8 +158,12 @@ class Enemy{
     
         
         //animation delay
+         if (delay ==  0){
+             pXpos = xPos;
+         }
+
         if (delay ==  0 & loopFrames >= 1) {
-            currentFrame = (currentFrame + 1) % loopFrames;
+            currentFrame = (currentFrame + 1) % loopFrames;  
         }
         else if (idle == true){
             currentFrame = 0;
@@ -159,13 +172,13 @@ class Enemy{
         delay = (delay + 1) % 5;
         
         //display animation
-        print("\nCurrent Frame: ", currentFrame);
-        print("\nFrame Offset: ", frameOffset);
-        print("\nloop Frames: ", loopFrames);
-        print("\nloop Frames: ", loopFrames);
-        print("\nAccesing Image at array: ", currentFrame + frameOffset);
+        //print("\nCurrent Frame: ", currentFrame);
+        //print("\nFrame Offset: ", frameOffset);
+        //print("\nloop Frames: ", loopFrames);
+        //print("\nloop Frames: ", loopFrames);
+        //print("\nAccesing Image at array: ", currentFrame + frameOffset);
         
-        image(playerImages[(currentFrame + frameOffset)],xPos - hitboxw,yPos - 5);
+        image(enemyImages[(currentFrame + frameOffset)],xPos - hitboxw,yPos - 5);
     }
     
 /*   
@@ -209,6 +222,30 @@ class Enemy{
     
     private void hitboxcolour(int r, int g, int b,int a) {
         fill(r,g,b,a);
+    }
+
+    
+    private void brain() {
+
+        //auto-move to player pos
+        if (p.getPlayerPos() < xPos -(hitboxw*2)) {
+            distance = p.getPlayerPos() - xPos;
+            target = distance -15;
+            xPos = xPos - (maxSpeed);
+        }
+        else if (p.getPlayerPos() > xPos+(hitboxw*2)) {
+            distance = p.getPlayerPos() - xPos;
+            target = distance -15;
+            xPos = xPos + maxSpeed;
+        }
+
+        //attack if within range
+        if (p.getPlayerPos() >= xPos -(hitboxw*2)) {
+            attack = true;
+        }
+        else if (p.getPlayerPos() <= xPos -(hitboxw*2)){
+            attack = true;
+        }
     }
 
 }

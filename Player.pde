@@ -29,9 +29,7 @@ class Player {
     //---CONSTRUCTOR---//
     
     Player() {
-        //starting Position
-        xPos = 50;
-        yPos = height - 150;
+
         
         //movement
         maxSpeed = 2;
@@ -39,6 +37,7 @@ class Player {
         speedY = 0;
         
         //animation
+        playerImages = l.getImageArray();
         loopFrames = 0;
         delay = 0;
         directionFacing = true;
@@ -53,23 +52,28 @@ class Player {
         
         //debug
         showAllFrames = false;
+
+        //starting Position
+        xPos = 50;
+        yPos = level.getScreenBottom()-hitboxh;
     }
     
     //---METHODS---//
     
+    //update character ie. update health and movement position, animation state
+    public void update() {
+        animation();
+        controller();
+        display();
+    }
+
     //draw character on screen
-    public void display() {
+    private void display() {
         //draw hitbox & draw character model - character model follows hitbox
         rect(xPos, yPos, hitboxw, hitboxh);
     }
     
-    //update character ie. update health and movement position, animation state
-    public void update() {
-        animation();
-        controls();
-    }
-    
-    private void controls() {
+    private void controller() {
         if (left) {
             speedX = -maxSpeed;
             xPos = xPos + speedX;
@@ -146,8 +150,6 @@ class Player {
             attack = false;
             }
     
-    
-        
         //animation delay
         if (delay ==  0 & loopFrames >= 1) {
             currentFrame = (currentFrame + 1) % loopFrames;
@@ -159,11 +161,11 @@ class Player {
         delay = (delay + 1) % 5;
         
         //display animation
-        print("\nCurrent Frame: ", currentFrame);
-        print("\nFrame Offset: ", frameOffset);
-        print("\nloop Frames: ", loopFrames);
-        print("\nloop Frames: ", loopFrames);
-        print("\nAccesing Image at array: ", currentFrame + frameOffset);
+        //print("\nCurrent Frame: ", currentFrame);
+       //print("\nFrame Offset: ", frameOffset);
+        //print("\nloop Frames: ", loopFrames);
+        //print("\nloop Frames: ", loopFrames);
+        //print("\nAccesing Image at array: ", currentFrame + frameOffset);
         
         image(playerImages[(currentFrame + frameOffset)],xPos - hitboxw,yPos - 5);
     }
@@ -210,7 +212,19 @@ class Player {
     private void hitboxcolour(int r, int g, int b,int a) {
         fill(r,g,b,a);
     }
+
+    //getters
+    public float getPlayerPos (){
+        return xPos;
+    }
+
+    //setters
+    public void setXpos(int xPos){
+        this.xPos = xPos;
+    }
     
+
+    //controls
     private void keyPressed() {
         if (key == 'a') {
             left = true;

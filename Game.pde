@@ -1,27 +1,32 @@
 class Game {
     
     //---PROPERTIES---//
-    
-    //arrays
-    PImage[] playerImages;
-    
+
     //asset filepaths
     String playerSpriteSheetDirectory;
     String enemySpriteSheetDirectory;
     String bulletSpriteSheetDirectory;
     String birdSpriteSheetDirectory;
+    String levelSpriteSheetDirectory;
+    
+    //arrays
+    PImage[] playerImages;
+    PImage[] enemyImages;
+    PImage[] levelImages;
     
 
     //---CONSTRUCTOR---//
 
     Game() {
         //Set FilePaths
-        playerSpriteSheetDirectory = sketchPath() + "\\assets\\Spritesheets\\MainCharacter\\";
+        playerSpriteSheetDirectory = sketchPath() + "\\assets\\Spritesheets\\Player\\";
         enemySpriteSheetDirectory = sketchPath() + "\\assets\\Spritesheets\\Enemy\\";
         bulletSpriteSheetDirectory = sketchPath() + "\\assets\\Spritesheets\\Bullet\\";
         birdSpriteSheetDirectory = sketchPath() + "\\assets\\Spritesheets\\Bird\\";
+        levelSpriteSheetDirectory = sketchPath() + "\\assets\\Spritesheets\\Level\\";
 
         playerImages = new PImage[0];
+        enemyImages = new PImage[0];
     }
     
     //---METHODS---//
@@ -29,23 +34,21 @@ class Game {
     //called once on Setup()
     private void loadGame() {
 
-        //create Player Object
-        p = new Player();
-
         //create Loader Object
         l = new Loader();
-        playerImages = l.loadSpritesheets(playerSpriteSheetDirectory, playerImages);
-        l.setImageArray(playerImages);
-
-        //create Enemy Object
-        enemy = new Enemy();
 
         //create Level Object
+        levelImages = l.loadSpritesheets(levelSpriteSheetDirectory);
         level = new Level();
 
-        //create Level Loader
-        //l = new Loader()
-        //levelImages = l.loadSpritesheets(playerSpriteSheetDirectory, levelImages);
+        //create Player Object
+        playerImages = l.loadSpritesheets(playerSpriteSheetDirectory);
+        p = new Player();
+
+        //create Enemy Object
+        enemyImages = l.loadSpritesheets(playerSpriteSheetDirectory);
+        enemy = new Enemy();
+
 
     }
     
