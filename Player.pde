@@ -1,4 +1,5 @@
 class Player {
+
     //---PROPERTIES---//
     
     //position
@@ -12,6 +13,7 @@ class Player {
     boolean left, right, up;
     
     //animation properties
+    PImage[] playerImages;
     int currentFrame, loopFrames, frameOffset, delay;
     boolean directionFacing;
     boolean idle;
@@ -37,7 +39,7 @@ class Player {
         speedY = 0;
         
         //animation
-        loopFrames = g.playerImages.size() - 1;
+        loopFrames = 0;
         delay = 0;
         directionFacing = true;
         
@@ -47,9 +49,7 @@ class Player {
         //collision
         hitboxh = 40;
         hitboxw = 15;
-        attackhitboxW = 20;
-    
-    
+        attackhitboxW = 15;
         
         //debug
         showAllFrames = false;
@@ -58,17 +58,15 @@ class Player {
     //---METHODS---//
     
     //draw character on screen
-    private void display() {
+    public void display() {
         //draw hitbox & draw character model - character model follows hitbox
         rect(xPos, yPos, hitboxw, hitboxh);
     }
     
-    //update character ie. update health and movement position
-    private void update() {
-        
+    //update character ie. update health and movement position, animation state
+    public void update() {
         animation();
         controls();
-        delay = (delay + 1) % 5;
     }
     
     private void controls() {
@@ -93,7 +91,7 @@ class Player {
         }
         
         if (showAllFrames) {
-            debugdisplayspritesheet(g.playerImages.size() - 1);
+            debugdisplayspritesheet(l.getNumofImagesInArray(playerImages));
         }
     }
     
@@ -157,6 +155,8 @@ class Player {
         else if (idle == true){
             currentFrame = 0;
         }
+
+        delay = (delay + 1) % 5;
         
         //display animation
         print("\nCurrent Frame: ", currentFrame);
@@ -165,7 +165,7 @@ class Player {
         print("\nloop Frames: ", loopFrames);
         print("\nAccesing Image at array: ", currentFrame + frameOffset);
         
-        image(g.playerImages.get(currentFrame + frameOffset),xPos - hitboxw,yPos - 5);
+        image(playerImages[(currentFrame + frameOffset)],xPos - hitboxw,yPos - 5);
     }
     
     
@@ -175,7 +175,7 @@ class Player {
         int scaleX = 46;
         int scaleY = 50;
         
-        int imgtoprint = 0;
+   
         float y;
         float x;
         int row;
@@ -186,7 +186,7 @@ class Player {
         row = 0;
         column = 0;
         
-        for (int i = 0; i <= numofimages; i++) {
+        for (int i = 0; i < numofimages; i++) {
             //ifthe sprite sheet displays pass the screen size - start a new row offset by size of tile
             if (x >= width - 100) {
                 row = row + 1;
@@ -196,12 +196,14 @@ class Player {
             
             x = column * scaleX;
             y = scaleY * row;
+
+
             
             //Draw Shape
-            image(g.playerImages.get(imgtoprint),x,y);
+            image(playerImages[i],x,y);
             fill(0, 0, 0);
             text(i,x,y + 12);
-            imgtoprint = imgtoprint + 1;
+    
         }
     }
     
@@ -223,6 +225,7 @@ class Player {
         }        
         
         if (key == ']') {
+        
             showAllFrames = true;
         } 
     }
@@ -245,4 +248,5 @@ class Player {
             showAllFrames = false;
         }
     }
+
 }

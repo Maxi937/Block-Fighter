@@ -66,6 +66,7 @@ Description: Player must kill enemies and avoid blocks falling from the sky
 - [ ] Death
 - [ ] Collision
 - [ ] Take Damage
+- [ ] Move display() into update ()
 
 ### Game
 

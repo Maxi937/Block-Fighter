@@ -1,8 +1,12 @@
 
 import java.io.*;
 
+//Objects required in the program
 Player p;
 Game g;
+Loader l;
+Level level;
+Enemy enemy;
 
 
 void setup() {
@@ -12,7 +16,6 @@ void setup() {
     //Game
     g = new Game();
     g.loadGame();
-    
 }
 
 void draw() {
