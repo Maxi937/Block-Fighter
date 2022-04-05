@@ -48,6 +48,7 @@ class Game {
         //create Enemy Object
         enemyImages = l.loadSpritesheets(playerSpriteSheetDirectory);
         enemy = new Enemy();
+
     }
     
     //called every frame on Draw()

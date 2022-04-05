@@ -7,6 +7,7 @@ Game g;
 Loader l;
 Level level;
 Enemy enemy;
+//CollisionDetector c;
 
 
 void setup() {

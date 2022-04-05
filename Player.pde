@@ -19,6 +19,7 @@ public class Player {
     int currentFrame, loopFrames, frameOffset, delay;
     
     //collision
+
     int hitboxh, hitboxw;
     int attackhitboxW;
     
@@ -47,6 +48,7 @@ public class Player {
         hitboxh = 40;
         hitboxw = 15;
         attackhitboxW = 15;
+       
         
         //debug
         showAllFrames = false;
@@ -208,12 +210,16 @@ public class Player {
     }
 
     private void hit(){
-        
+
     }
     
     //getters
     public float getPlayerPos (){
         return xPos;
+    }
+
+    public int getPlayerAttackBox (){
+        return int(xPos);
     }
 
     //setters

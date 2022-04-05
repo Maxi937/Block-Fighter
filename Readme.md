@@ -63,11 +63,11 @@ Description: Player must kill enemies and avoid blocks falling from the sky
 ### Player
 
 - [ ] Controller
-- [ ] Movement
+- [x] Movement
 - [ ] Death
 - [ ] Collision
 - [ ] Take Damage
-- [ ] Move display() into update ()
+- [x] Move display() into update ()
 
 ### Game
 
@@ -79,7 +79,7 @@ Description: Player must kill enemies and avoid blocks falling from the sky
 
 ### Enemy
 
-- [ ] Enemy Class
+- [x] Enemy Class
 - [ ] Sprite
 - [ ] Animations
   - [ ] Walk
@@ -88,5 +88,5 @@ Description: Player must kill enemies and avoid blocks falling from the sky
 
 ### Art
 
-- [ ] Background
+- [x] Background
 - [ ] Ambience
