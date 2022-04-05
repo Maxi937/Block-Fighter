@@ -1,6 +1,6 @@
-class Enemy{
+public class Enemy{
 
-    //---PROPERTIES---//
+//---PROPERTIES---//
     
     //position
     private float xPos, yPos;
@@ -32,7 +32,7 @@ class Enemy{
     //debug
     private boolean showAllFrames;
     
-    //---CONSTRUCTOR---//
+//---CONSTRUCTOR---//
     
     Enemy() {
         //movement
@@ -62,20 +62,20 @@ class Enemy{
         pXpos = xPos;
     }
     
-    //---METHODS---//
+//---METHODS---//
     
-    //draw character on screen
-    public void display() {
-        //draw hitbox & draw character model - character model follows hitbox
-        rect(xPos, yPos, hitboxw, hitboxh);
-    }
-    
-    //update character ie. update health and movement position, animation state
+    //update character ie. update health and movement position, animation state, draw character on screen
     public void update() {
         animation();
         controller();
         brain();
+        display();
         print("\nXpos: ", xPos, "\tpXpos: ",pXpos);
+    }
+
+    public void display() {
+        //draw hitbox & draw character model - character model follows hitbox
+        rect(xPos, yPos, hitboxw, hitboxh);
     }
     
     private void controller() {
@@ -121,7 +121,7 @@ class Enemy{
             }          
         }
 
-        //attack
+        // attack
         if (attack) {
             if (directionFacing) {
                 frameOffset = 0;

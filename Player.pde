@@ -1,6 +1,6 @@
-class Player {
+public class Player {
 
-    //---PROPERTIES---//
+//---PROPERTIES---//
     
     //position
     float xPos, yPos;
@@ -26,7 +26,7 @@ class Player {
     //debug
     boolean showAllFrames;
     
-    //---CONSTRUCTOR---//
+//---CONSTRUCTOR---//
     
     Player() {
 
@@ -58,7 +58,7 @@ class Player {
         yPos = level.getScreenBottom()-hitboxh;
     }
     
-    //---METHODS---//
+//---METHODS---//
     
     //update character ie. update health and movement position, animation state
     public void update() {

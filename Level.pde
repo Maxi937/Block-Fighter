@@ -18,17 +18,25 @@ class Level {
     
     //---METHODS---//
     public void display(){
-        background(0, 0, 0);
+        background(20, 20, 20);
         drawGround();
         drawBackground(bimageW);
         drawForeground(fimageW);
         //screenBorder();
+        letterBox();
     }
 
 
     private void screenBorder() {
         fill(0, 255,0, 50);
         rect(screenBorderOffset, 0, width - (screenBorderOffset*2), screenBottom);
+    }
+
+    private void letterBox(){
+        fill(0,0,0);
+        rect(0, 0, width, 50);
+        rect(0, height-50,width, 50);
+
     }
 
     private void drawGround() {

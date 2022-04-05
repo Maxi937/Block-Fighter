@@ -1,6 +1,6 @@
 class Game {
     
-    //---PROPERTIES---//
+//---PROPERTIES---//
 
     //asset filepaths
     String playerSpriteSheetDirectory;
@@ -15,7 +15,7 @@ class Game {
     PImage[] levelImages;
     
 
-    //---CONSTRUCTOR---//
+//---CONSTRUCTOR---//
 
     Game() {
         //Set FilePaths
@@ -29,7 +29,7 @@ class Game {
         enemyImages = new PImage[0];
     }
     
-    //---METHODS---//
+//---METHODS---//
     
     //called once on Setup()
     private void loadGame() {
@@ -48,8 +48,6 @@ class Game {
         //create Enemy Object
         enemyImages = l.loadSpritesheets(playerSpriteSheetDirectory);
         enemy = new Enemy();
-
-
     }
     
     //called every frame on Draw()
@@ -60,12 +58,10 @@ class Game {
         //update Player
         p.hitboxcolour(0,0,255,50);
         p.update();
-        p.display();
 
         //update Enemy
         enemy.hitboxcolour(255,0,0,50);
         enemy.update();
-        enemy.display();
     }
 }
     
