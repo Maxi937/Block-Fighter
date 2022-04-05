@@ -70,7 +70,7 @@ public class Enemy{
         controller();
         brain();
         display();
-        print("\nXpos: ", xPos, "\tpXpos: ",pXpos);
+        //print("\nXpos: ", xPos, "\tpXpos: ",pXpos);
     }
 
     public void display() {

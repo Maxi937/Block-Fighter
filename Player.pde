@@ -7,6 +7,8 @@ public class Player {
     
     //game
     int health;
+    int attackDelay;
+    boolean directionFacing, idle, attack;
     
     //movement
     float maxSpeed, speedX, speedY;
@@ -14,10 +16,7 @@ public class Player {
     
     //animation properties
     PImage[] playerImages;
-    int currentFrame, loopFrames, frameOffset, delay;
-    boolean directionFacing;
-    boolean idle;
-    boolean attack;
+    int currentFrame, loopFrames, frameOffset, animationDelay;
     
     //collision
     int hitboxh, hitboxw;
@@ -27,10 +26,7 @@ public class Player {
     boolean showAllFrames;
     
 //---CONSTRUCTOR---//
-    
     Player() {
-
-        
         //movement
         maxSpeed = 2;
         speedX = 0;
@@ -39,11 +35,13 @@ public class Player {
         //animation
         playerImages = l.getImageArray();
         loopFrames = 0;
-        delay = 0;
+        animationDelay = 0;
         directionFacing = true;
         
         //game variables
         health = 100;
+        attackDelay = 50;
+
         
         //collision
         hitboxh = 40;
@@ -65,6 +63,7 @@ public class Player {
         animation();
         controller();
         display();
+        print("\nAttack is: ",attack);
     }
 
     //draw character on screen
@@ -91,7 +90,11 @@ public class Player {
             else {
                 rect(xPos+hitboxw, yPos, attackhitboxW, hitboxh);
             }
-            
+
+            if (attackDelay ==  0) {
+                attack = false;
+            }
+            attackDelay = (attackDelay + 1) % 50;
         }
         
         if (showAllFrames) {
@@ -130,7 +133,6 @@ public class Player {
             idle = false;
             right = false;
             left = false;
-            attack = true;
         }
 
         //running
@@ -139,26 +141,24 @@ public class Player {
             loopFrames = 7;
             idle = false;
             directionFacing = true;
-            attack = false;
             }
             
-            if (left) {
+        if (left) {
             frameOffset = 50;
             loopFrames = 7;
             idle = false;
             directionFacing = false;
-            attack = false;
             }
     
         //animation delay
-        if (delay ==  0 & loopFrames >= 1) {
+        if (animationDelay ==  0 & loopFrames >= 1) {
             currentFrame = (currentFrame + 1) % loopFrames;
         }
         else if (idle == true){
             currentFrame = 0;
         }
 
-        delay = (delay + 1) % 5;
+        animationDelay = (animationDelay + 1) % 5;
         
         //display animation
         //print("\nCurrent Frame: ", currentFrame);
@@ -253,10 +253,6 @@ public class Player {
         if (key ==  'd') {
             right = false;
         }
-
-        if (keyCode == 32) {
-            attack = false;  
-        }       
 
         if (key ==  ']') {
             showAllFrames = false;
