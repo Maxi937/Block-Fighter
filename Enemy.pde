@@ -155,8 +155,6 @@ public class Enemy{
             attack = false;
             }
     
-    
-        
         //animation delay
          if (delay ==  0){
              pXpos = xPos;
@@ -220,7 +218,7 @@ public class Enemy{
         }
     }*/
     
-    private void hitboxcolour(int r, int g, int b,int a) {
+    private void setHitBoxColour(int r, int g, int b,int a) {
         fill(r,g,b,a);
     }
 

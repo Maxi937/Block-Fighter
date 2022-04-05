@@ -1,4 +1,4 @@
-
+  
 import java.io.*;
 
 //Objects required in the program
@@ -25,9 +25,9 @@ void draw() {
 
 //Controls
 void keyPressed() {
-    p.keyPressed();
+    p.playerControls(keyPressed);
 }
 
 void keyReleased() {
-   p.keyReleased();
+   p.playerControls();
 }

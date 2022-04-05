@@ -8,15 +8,15 @@ public class Player {
     //game
     int health;
     int attackDelay;
-    boolean directionFacing, idle, attack;
-    
+   
     //movement
     float maxSpeed, speedX, speedY;
     boolean left, right, up;
+    boolean directionFacing, idle,attack;
     
     //animation properties
     PImage[] playerImages;
-    int currentFrame, loopFrames, frameOffset, animationDelay;
+    int currentFrame, loopFrames, frameOffset, delay;
     
     //collision
     int hitboxh, hitboxw;
@@ -35,12 +35,12 @@ public class Player {
         //animation
         playerImages = l.getImageArray();
         loopFrames = 0;
-        animationDelay = 0;
+        delay = 0;
         directionFacing = true;
         
         //game variables
         health = 100;
-        attackDelay = 50;
+        attackDelay = 40;
 
         
         //collision
@@ -63,7 +63,7 @@ public class Player {
         animation();
         controller();
         display();
-        print("\nAttack is: ",attack);
+        print("\nXpos: ", xPos, "Width: ", width);
     }
 
     //draw character on screen
@@ -94,7 +94,7 @@ public class Player {
             if (attackDelay ==  0) {
                 attack = false;
             }
-            attackDelay = (attackDelay + 1) % 50;
+            attackDelay = (attackDelay + 1) % 40;
         }
         
         if (showAllFrames) {
@@ -104,10 +104,8 @@ public class Player {
     
     // animations
     private void animation() {
-        if (xPos == xPos) {
-            idle = true;
-        }
-        
+        idle = true;
+    
         if (idle == true) {
             if (directionFacing) {
                 frameOffset = 28;
@@ -141,35 +139,35 @@ public class Player {
             loopFrames = 7;
             idle = false;
             directionFacing = true;
-            }
+        }
             
         if (left) {
             frameOffset = 50;
             loopFrames = 7;
             idle = false;
             directionFacing = false;
-            }
+        }
     
         //animation delay
-        if (animationDelay ==  0 & loopFrames >= 1) {
+        if (delay ==  0 & loopFrames >= 1) {
             currentFrame = (currentFrame + 1) % loopFrames;
         }
         else if (idle == true){
             currentFrame = 0;
         }
 
-        animationDelay = (animationDelay + 1) % 5;
+        delay = (delay + 1) % 5;
         
         //display animation
         //print("\nCurrent Frame: ", currentFrame);
-       //print("\nFrame Offset: ", frameOffset);
+        //print("\nFrame Offset: ", frameOffset);
         //print("\nloop Frames: ", loopFrames);
         //print("\nloop Frames: ", loopFrames);
         //print("\nAccesing Image at array: ", currentFrame + frameOffset);
-        
+
+        //play animation from animation array
         image(playerImages[(currentFrame + frameOffset)],xPos - hitboxw,yPos - 5);
     }
-    
     
     private void debugdisplayspritesheet(int numofimages) {
         /*will display character sprite sheet on top of screen
@@ -208,24 +206,27 @@ public class Player {
     
         }
     }
-    
-    private void hitboxcolour(int r, int g, int b,int a) {
-        fill(r,g,b,a);
-    }
 
+    private void hit(){
+        
+    }
+    
     //getters
     public float getPlayerPos (){
         return xPos;
     }
 
     //setters
-    public void setXpos(int xPos){
+    public void setPlayerXpos(int xPos){
         this.xPos = xPos;
     }
-    
+
+    private void setHitBoxColour(int r, int g, int b,int a) {
+        fill(r,g,b,a);
+    }
 
     //controls
-    private void keyPressed() {
+    private void playerControls(boolean keyPressed) {
         if (key == 'a') {
             left = true;
         }
@@ -234,18 +235,17 @@ public class Player {
             right = true;  
         }
 
-        if (keyCode == 32) {
+        if (key == 'e') {
             attack = true;  
         }        
         
         if (key == ']') {
-        
             showAllFrames = true;
         } 
     }
     
     
-    private void keyReleased() {
+    private void playerControls() {
         if (key ==  'a') {
             left = false;
         }

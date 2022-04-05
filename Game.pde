@@ -53,14 +53,14 @@ class Game {
     //called every frame on Draw()
     private void updateGame() {
         //update Level
-        level.display();
+        level.update();
 
         //update Player
-        p.hitboxcolour(0,0,255,50);
+        p.setHitBoxColour(0,0,255,50);
         p.update();
 
         //update Enemy
-        enemy.hitboxcolour(255,0,0,50);
+        enemy.setHitBoxColour(255,0,0,50);
         enemy.update();
     }
 }
