@@ -11,7 +11,7 @@ public class Player {
    
     //movement
     float maxSpeed, speedX, speedY;
-    boolean left, right, up;
+    boolean left, right, up, duck;
     boolean directionFacing, idle,attack;
     
     //animation properties
@@ -48,7 +48,6 @@ public class Player {
         hitboxh = 40;
         hitboxw = 15;
         attackhitboxW = 15;
-       
         
         //debug
         showAllFrames = false;
@@ -71,7 +70,13 @@ public class Player {
     //draw character on screen
     private void display() {
         //draw hitbox & draw character model - character model follows hitbox
-        rect(xPos, yPos, hitboxw, hitboxh);
+        if (duck == true){
+            rect(xPos, yPos + (hitboxh/2), hitboxw, hitboxh/2);
+
+        }
+        else {
+            rect(xPos, yPos, hitboxw, hitboxh);
+        }
     }
     
     private void controller() {
@@ -98,6 +103,17 @@ public class Player {
             }
             attackDelay = (attackDelay + 1) % 40;
         }
+
+        if (duck) {
+            //need to shorten hitbox
+        
+            idle = false;
+            attack = false;
+            left = false;
+            right = false;
+        }
+
+
         
         if (showAllFrames) {
             debugdisplayspritesheet(l.getNumofImagesInArray(playerImages));
@@ -111,11 +127,19 @@ public class Player {
         if (idle == true) {
             if (directionFacing) {
                 frameOffset = 28;
-                loopFrames = 0;    
+                loopFrames = 0;
+                    if (duck) {
+                        frameOffset = 8;
+                        loopFrames = 0;
+                    }    
             }
             if (directionFacing == false) {
                 frameOffset = 29;
-                loopFrames = 0;    
+                loopFrames = 0; 
+                   if (duck) {
+                        frameOffset = 9;
+                        loopFrames = 0;
+                    }  
             }          
         }
 
@@ -133,13 +157,16 @@ public class Player {
             idle = false;
             right = false;
             left = false;
+            duck = false;
         }
 
         //running
         if (right) {
             frameOffset = 42;
             loopFrames = 7;
+            duck = false;
             idle = false;
+            attack = false;
             directionFacing = true;
         }
             
@@ -147,8 +174,11 @@ public class Player {
             frameOffset = 50;
             loopFrames = 7;
             idle = false;
+            duck = false;
+            attack = false;
             directionFacing = false;
         }
+
     
         //animation delay
         if (delay ==  0 & loopFrames >= 1) {
@@ -203,7 +233,7 @@ public class Player {
             
             //Draw Shape
             image(playerImages[i],x,y);
-            fill(0, 0, 0);
+            fill(200, 0, 0);
             text(i,x,y + 12);
     
         }
@@ -243,6 +273,10 @@ public class Player {
 
         if (key == 'e') {
             attack = true;  
+        }
+
+        if (key == 's') {
+            duck = true;
         }        
         
         if (key == ']') {

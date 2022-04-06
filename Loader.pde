@@ -2,6 +2,8 @@ class Loader {
     
 //---PROPERTIES---//
 
+
+
     private String[] nameAssetFolders;
     private int numofAssetFolders;
     private int totalImages;
