@@ -1,29 +1,42 @@
 class Loader {
     
 //---PROPERTIES---//
-    private int totalImages;
-    PImage[] imageArray;
     String path;
+    private int totalImages;
+
+    //asset filepaths
+    String playerSpriteSheetDirectory;
+    String enemySpriteSheetDirectory;
+    String bulletSpriteSheetDirectory;
+    String enemyRangedSpriteSheetDirectory;
+    String levelSpriteSheetDirectory;
+    String effectSpriteSheetDirectory;
+
+    //temp array
+    PImage[] imageArray;
     
     
 //---CONSTRUCTOR---//
     
     Loader() {
-        totalImages = 0;
-        
+        playerSpriteSheetDirectory = sketchPath() + "\\assets\\Spritesheets\\Player\\";
+        enemySpriteSheetDirectory = sketchPath() + "\\assets\\Spritesheets\\Enemy\\";
+        bulletSpriteSheetDirectory = sketchPath() + "\\assets\\Spritesheets\\Bullet\\";
+        enemyRangedSpriteSheetDirectory = sketchPath() + "\\assets\\Spritesheets\\EnemyRanged\\";
+        levelSpriteSheetDirectory = sketchPath() + "\\assets\\Spritesheets\\Level\\";
     }
     
 //---METHODS---//
     
     //Load Image Array
-    public PImage[] loadSpritesheets(String spriteSheetDirectory, String fileName, Player p) {
+    public PImage[] loadSpritesheets(String fileName, Player p) {
 
-        totalImages = 53;
+        totalImages = 55;
         imageArray = new PImage[totalImages];
 
-        print("\nDirectory: ", spriteSheetDirectory);
+        print("\nDirectory: ", playerSpriteSheetDirectory);
         print("\nTotal number of images: ",totalImages,"\n");
-        path = spriteSheetDirectory + "\\" + fileName;
+        path = playerSpriteSheetDirectory + "\\" + fileName;
         print("\nPath:", path);
         
         print("\nLOADING IMAGES\n");
@@ -43,15 +56,15 @@ class Loader {
     }
 
     //Load Level Image Array
-    public PImage[] loadSpritesheets(String spriteSheetDirectory, String fileName, Level l) {
+    public PImage[] loadSpritesheets(String fileName, Level l) {
 
         totalImages = 9;
         imageArray = new PImage[totalImages];
         print("/n-----------I am in use---------------");
 
-        print("\nDirectory: ", spriteSheetDirectory);
+        print("\nDirectory: ", levelSpriteSheetDirectory);
         print("\nTotal number of images: ",totalImages,"\n");
-        path = spriteSheetDirectory + "\\" + fileName;
+        path = levelSpriteSheetDirectory + "\\" + fileName;
         print("\nPath:", path);
         
         print("\nLOADING IMAGES\n");
@@ -70,15 +83,15 @@ class Loader {
     }
 
     //Load Enemy Image Array
-    public PImage[] loadSpritesheets(String spriteSheetDirectory, String fileName, Enemy e) {
+    public PImage[] loadSpritesheets(String fileName, Enemy e) {
 
         totalImages = 53;
         imageArray = new PImage[totalImages];
         print("/n-----------I am in use---------------");
 
-        print("\nDirectory: ", spriteSheetDirectory);
+        print("\nDirectory: ", enemySpriteSheetDirectory);
         print("\nTotal number of images: ",totalImages,"\n");
-        path = spriteSheetDirectory + "\\" + fileName;
+        path = enemySpriteSheetDirectory + "\\" + fileName;
         print("\nPath:", path);
         
         print("\nLOADING IMAGES\n");
@@ -95,16 +108,16 @@ class Loader {
         return imageArray;   
     }
 
-    //Load Enemy Image Array
-    public PImage[] loadSpritesheets(String spriteSheetDirectory, String fileName, EnemyRanged e) {
+    //Load EnemyRanged Image Array
+    public PImage[] loadSpritesheets(String fileName, EnemyRanged e) {
 
         totalImages = 53;
         imageArray = new PImage[totalImages];
         print("/n-----------I am in use---------------");
 
-        print("\nDirectory: ", spriteSheetDirectory);
+        print("\nDirectory: ", enemyRangedSpriteSheetDirectory);
         print("\nTotal number of images: ",totalImages,"\n");
-        path = spriteSheetDirectory + "\\" + fileName;
+        path = enemyRangedSpriteSheetDirectory + "\\" + fileName;
         print("\nPath:", path);
         
         print("\nLOADING IMAGES\n");
@@ -120,15 +133,12 @@ class Loader {
         totalImages = 0;
         return imageArray;
     }
-    
-
 
     //getters
     public int getNumofImagesInArray(PImage[] imageArray) {
         return imageArray.length;
     }
 
-    //setters
   
     
     

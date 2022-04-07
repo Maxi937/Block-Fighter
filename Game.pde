@@ -1,39 +1,29 @@
 class Game {
     
 //---PROPERTIES---//
-    int score;
-    String name;
 
-    //asset filepaths
-    String playerSpriteSheetDirectory;
-    String enemySpriteSheetDirectory;
-    String bulletSpriteSheetDirectory;
-    String birdSpriteSheetDirectory;
-    String levelSpriteSheetDirectory;
-    String effectSpriteSheetDirectory;
+    //game variables
+    private int score;
+    private int difficulty;
+    private int maximumLives;
+    private String name;
+
+    //collision
+    float collisionTarget;
+    float collisionDistance;
     
-    //arrays
+    //Image arrays
     PImage[] playerImages;
     PImage[] enemyImages;
     PImage[] levelImages;
     PImage[] effectImages;
- 
-    
+
 
 //---CONSTRUCTOR---//
 
     Game() {
-        //Set FilePaths
-        playerSpriteSheetDirectory = sketchPath() + "\\assets\\Spritesheets\\Player\\";
-        enemySpriteSheetDirectory = sketchPath() + "\\assets\\Spritesheets\\Enemy\\";
-        bulletSpriteSheetDirectory = sketchPath() + "\\assets\\Spritesheets\\Bullet\\";
-        birdSpriteSheetDirectory = sketchPath() + "\\assets\\Spritesheets\\Bird\\";
-        levelSpriteSheetDirectory = sketchPath() + "\\assets\\Spritesheets\\Level\\";
-   
-        playerImages = new PImage[0];
-        enemyImages = new PImage[0];
-
         score = 0;
+        maximumLives = 0;
     }
     
 //---METHODS---//
@@ -46,68 +36,123 @@ class Game {
 
         //create Level Object
         level = new Level();
-        levelImages = l.loadSpritesheets(levelSpriteSheetDirectory, "level", level);
+        levelImages = l.loadSpritesheets("level", level);
         level.setImageArray(levelImages);
 
         //create Player Object
-        p = new Player();
-        playerImages = l.loadSpritesheets(playerSpriteSheetDirectory, "player", p);
+        p = new Player(difficulty);
+        playerImages = l.loadSpritesheets("player", p);
         p.setImageArray(playerImages);
     
         //create Enemy Object
         enemy = new Enemy();
-        enemyImages = l.loadSpritesheets(playerSpriteSheetDirectory, "player", enemy);
+        enemyImages = l.loadSpritesheets("player", p);
         enemy.setImageArray(enemyImages);
         
-
         //create Ranged Enemy Object
         enemyRanged = new EnemyRanged();
-        enemyImages = l.loadSpritesheets(playerSpriteSheetDirectory, "player", enemyRanged);
+        enemyImages = l.loadSpritesheets("player", p);
         enemyRanged.setImageArray(enemyImages);
 
         //create Bullet Object
         bullet = new Bullet();
-
-        //create Collision Object
-        c = new CollisionDetector();
     }
     
     //called every frame on Draw()
     private void updateGame() {
-        //update Level
-        level.update();
-
-        //update Player
-        p.setHitBoxColour(0,0,255,50);
-        p.update();
-
-        //update Enemy
-        enemy.setHitBoxColour(255,0,0,50);
-        if (enemy.getDeath() == false){
-                enemy.update();
-                c.getHit(p,enemy);
-            }
-
-
-        //update Enemy
-        enemyRanged.setHitBoxColour(255,0,0,50);
-        if (enemyRanged.getDeath() == false){
-                enemyRanged.update();
-                c.getHit(p, enemyRanged);
-                c.getHit(bullet, p);
-            }
-        bullet.update();
-
-        //update Collision Detector
-        print("\nScore:", score);
+        getHit(bullet, p);
+        getHit(p, enemy);
+        getHit(p, enemyRanged);
+        getHit(enemy ,p);
     }
 
-
     //getters
+    private void getHit(Bullet b, Player p) {
+        if (b.getShooting() == true) {
+            collisionTarget = p.getPlayerXPos();
+            collisionDistance = b.getBulletXPos() - collisionTarget;
+            if (collisionDistance < 5 && collisionDistance > - 5) {
+                //print("/nI am pasing the player");
+                if (b.getBulletYPos() == p.getPlayerYPos() && p.getBlocking() == false) {
+                    //print("\nI have hit the player");
+                    p.setHit();
+                    bullet.setHit();
+                }
+                else {
+                    //print("\nI have missed");
+                    bullet.setMiss();
+                    g.setScore(20);
+                } 
+            }
+        }     
+    }
+    
+    private void getHit(Player player, Enemy e) {
+        
+        if (player.getPlayerAttacking()) {
+            collisionTarget = e.getEnemyXPos();
+            collisionDistance = abs(player.getPlayerXPos() - collisionTarget);
+            //print("\nTarget: ", target);
+            //print("\nDX: ", distance);
+            //print("\nattackbox: ", player.getPlayerAttackBoxW());
+            if (collisionDistance < player.getPlayerAttackBoxW() + player.getPlayerHitBoxW()) {
+                if (player.getDirection() != e.getDirection()) {
+                    e.setHit(player.getAttackDamage());
+                    //print("\nI have hit an enemy");
+                    g.setScore(2);
+                }
+                
+            }
+            
+        }
+    }
+
+    private void getHit(Player player, EnemyRanged e) {
+        
+        if (player.getPlayerAttacking()) {
+            collisionTarget = e.getEnemyXPos();
+            collisionDistance = abs(player.getPlayerXPos() - collisionTarget);
+            //print("\nTarget: ", target);
+            //print("\nDX: ", distance);
+            //print("\nattackbox: ", player.getPlayerAttackBoxW());
+            if (collisionDistance < player.getPlayerAttackBoxW() + player.getPlayerHitBoxW()) {
+                if (player.getDirection() != e.getDirection()) {
+                    e.setHit(player.getAttackDamage());
+                   //print("\nI have hit an enemy");
+                }
+                
+            }
+            
+        }
+    }
+
+    private void getHit(Enemy e ,Player player) {
+        
+        if (e.getEnemyAttacking()) {
+            collisionTarget = player.getPlayerXPos();
+            collisionDistance = abs(e.getEnemyXPos() - collisionTarget);
+            //print("\nTarget: ", collisionTarget);
+            //print("\nDX: ", collisionDistance);
+            //print("\nattackbox: ", player.getPlayerAttackBoxW());
+            if (collisionDistance < e.getEnemyAttackBoxW() + e.getEnemyHitBoxW()+2) {
+                if (e.getDirection() != player.getDirection() && p.getBlocking() == false) {
+                    player.setHit();
+                    e.setOnHit();
+                   //print("\nI have hit an enemy");
+                }
+                if (p.getBlocking()) {
+                    e.setOnHit();
+                   //print("\nI have hit an enemy");
+                }
+                
+            }
+            
+        }
+    }
+
     public int getScore(){
         return score;
     }
-
 
     //setters
     public void setScore(int s){

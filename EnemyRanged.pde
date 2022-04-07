@@ -75,7 +75,6 @@ public class EnemyRanged {
         animation();
         controller();
         brain();
-        takeDamage();
         display();
     }
     
@@ -95,19 +94,19 @@ public class EnemyRanged {
         }
         
         if (attack) {
-            if (frameCount % 260 == 0) {
+            if (frameCount % 160 == 0) {
                 bullet.setBulletXPos(xPos, yPos, directionFacing);
             }
         }
     }
 
-    private void takeDamage() {
+    private void takeDamage(int damageTaken) {
         if (hit == true) {
             hit = false;
-            health = health - 1;
+            health = health - damageTaken;
             blood = true;
             print("\nhealth:", this.health);
-            print("\nEnemy hit: ", hit);
+           // print("\nEnemy hit: ", hit);
                 if (health < 0){
                     death = true;
                 }
@@ -219,15 +218,9 @@ public class EnemyRanged {
         
         //attack if within range
             if (p.getPlayerXPos() < xPos - attackRange) {
-                //print("\nI will attack");
-                //print("\n", xPos - attackRange);
-                //print("\nMy Position: ",xPos);
-                //print("\nplayer position: ", p.getPlayerPos());
                 attack = true;
                 }
             else if (p.getPlayerXPos() < xPos + attackRange) {
-                //print("\nI will attack");
-                //print("\nplayer position: ", p.getPlayerPos());
                 attack = true;
             }
             
@@ -258,8 +251,9 @@ public class EnemyRanged {
         fill(r,g,b,a);
         }
     
-    public void setHit() {
+    public void setHit(int damageTaken) {
         hit = true;
+        takeDamage(damageTaken);
     }
     
     public void setImageArray(PImage[] imageArray){

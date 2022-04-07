@@ -21,6 +21,8 @@ public class Enemy{
     private boolean directionFacing;
     private boolean blood;
     private boolean death;
+    private boolean onHit;
+    private boolean canAttack;
     private int effectframeOffset, effectloopFrames, effectcurrentFrame;
     
     //collision
@@ -49,6 +51,7 @@ public class Enemy{
     
         //game variables
         health = 100;
+        onHit = false;
         
         //collision
         hitboxh = 40;
@@ -72,8 +75,11 @@ public class Enemy{
         animation();
         controller();
         brain();
-        takeDamage();
         display();
+
+        print("\nonHit:",onHit);
+        print("\nAttack:",attack);
+        print("\nCan Attack:",canAttack);
     }
 
     public void display() {
@@ -104,13 +110,13 @@ public class Enemy{
         
     }
 
-    private void takeDamage() {
+    private void takeDamage(int damageTaken) {
         if (hit == true) {
             hit = false;
-            health = health - 1;
+            health = health - damageTaken;
             blood = true;
-            print("\nhealth:", this.health);
-            print("\nEnemy hit: ", hit);
+            print("\nEnemy health:", this.health);
+            //print("\nEnemy hit: ", hit);
                 if (health < 0){
                     death = true;
                 }
@@ -209,13 +215,27 @@ public class Enemy{
         delay = (delay + 1) % 5;
         image(enemyImages[(currentFrame + frameOffset)],xPos - hitboxw,yPos - 5);
     }
-
-    
     
     private void brain() {
+        if (frameCount % 200 == 0 && canAttack == false){
+            canAttack = true;
+        }
 
+        if(hit){
+            attack = false;
+            canAttack = false;
+        }
+
+        if(onHit == true) {
+            if (frameCount % 100 == 0){
+                canAttack = false;
+                attack = false;
+                onHit = false; 
+            }
+        } 
+        
         //auto-move to player pos
-        if (p.getPlayerXPos() < xPos -(hitboxw*2)) {
+        if (p.getPlayerXPos() < xPos - (hitboxw*2)) {
             xPos = xPos - (maxSpeed);
         }
         else if (p.getPlayerXPos() > xPos+(hitboxw*2)) {
@@ -223,13 +243,19 @@ public class Enemy{
         }
 
         //attack if within range
-        if (p.getPlayerXPos() >= xPos -(hitboxw*2)) {
-            attack = true;
-        }
-        else if (p.getPlayerXPos() <= xPos -(hitboxw*2)){
-            attack = true;
-        }
+            if (p.getPlayerXPos() >= xPos -(hitboxw*2)) {
+                    if (canAttack){
+                        attack = true; 
+                    }
+                }
+             
+            else if (p.getPlayerXPos() <= xPos -(hitboxw*2)){
+                    if (canAttack){
+                        attack = true;
+                    }
+                }
     }
+                
 
     private void death(){
         if (death == true){
@@ -250,17 +276,36 @@ public class Enemy{
         return death;
     }
 
+    public boolean getEnemyAttacking() {
+        return attack;
+    }
+
+    public int getEnemyAttackBoxW() {
+        return attackhitboxW;
+    }
+
+    public int getEnemyHitBoxW() {
+        return hitboxw;
+    }
+
     //setters
     public void setHitBoxColour(int r, int g, int b,int a) {
         fill(r,g,b,a);
     }
 
-    public void setHit() {
+    public void setHit(int damageTaken) {
         hit = true;
+        takeDamage(damageTaken);
+    }
+
+    public void setOnHit() {
+        onHit = true;
     }
 
     public void setImageArray(PImage[] imageArray){
         enemyImages = imageArray;
     }
+
+
 
 }

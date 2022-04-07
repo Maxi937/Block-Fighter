@@ -8,6 +8,7 @@ public class Player {
     //game
     int health;
     int attackDelay;
+    int attackDamage;
     
     //movement
     float maxSpeed, speedX, speedY;
@@ -23,13 +24,13 @@ public class Player {
     //collision
     int hitboxh, hitboxw;
     int attackhitboxW;
-    boolean hit;
+    boolean hit, block;
     
     //debug
     boolean showAllFrames;
     
 //---CONSTRUCTOR---//
-    Player() {
+    Player(int difficulty) {
         //movement
         maxSpeed = 2;
         speedX = 0;
@@ -43,12 +44,14 @@ public class Player {
         //game variables
         health = 100;
         attackDelay = 40;
+        attackDamage = (5*difficulty);
         
         //collision
         hitboxh = 40;
         hitboxw = 17;
         attackhitboxW = 15;
         hit = false;
+        block = false;
         
         //debug
         showAllFrames = false;
@@ -67,6 +70,7 @@ public class Player {
         takeDamage();
         controller();
         display();
+        print("\nblock: ", block);
     }
     
     //draw character on screen
@@ -132,12 +136,12 @@ public class Player {
     }
     
     private void takeDamage() {
-        if (hit == true) {
+        if (hit == true & block == false) {
             health = health - 15;
             hit = false;
             blood = true;
-            //print("\nhealth:", health);
-            //print("\nhit: ", hit);
+            print("\nhealth:", health);
+            //print("\nPLayer hit: ", hit);
         }
     }
     
@@ -214,7 +218,21 @@ public class Player {
             duck = false;
             attack = false;
         } 
-
+        if (block){
+             if (directionFacing) {
+                frameOffset = 53;
+                loopFrames = 0;
+            }
+            if (directionFacing == false) {
+                frameOffset = 54;
+                loopFrames = 0;
+            }      
+            duck = false;
+            left = false;
+            right = false;
+            attack = false;
+            blood = false;
+        }
 
         //blood
         if (blood) {
@@ -231,6 +249,7 @@ public class Player {
             attack = false;
             right = false;
             left = false;
+            jump = false;
             if (delay ==  0) {
                 effectcurrentFrame = (effectcurrentFrame + 1) % effectloopFrames;
                 //print("\n",effectcurrentFrame);
@@ -238,7 +257,7 @@ public class Player {
                     blood = false;
                     }
             }
-            
+
             image(playerImages[effectcurrentFrame + effectframeOffset],xPos - 2,yPos - 15,30,30);
         }
         
@@ -317,6 +336,9 @@ public class Player {
                 jumping();
             } 
         }
+        if (key == 'q') {
+            block = true;
+        }
         
         if (key == ']') {
             showAllFrames = true;
@@ -331,6 +353,10 @@ public class Player {
         
         if (key ==  'd') {
             right = false;
+        }
+
+        if (key == 'q') {
+            block = false;
         }
         
         if (key ==  ']') {
@@ -366,6 +392,14 @@ public class Player {
 
     public boolean getPlayerAttacking() {
         return attack;
+    }
+
+    public boolean getBlocking(){
+        return block;
+    }
+
+    public int getAttackDamage(){
+        return attackDamage;
     }
     
     //setters
