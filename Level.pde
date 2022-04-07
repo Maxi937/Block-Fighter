@@ -1,17 +1,24 @@
 class Level {
      
     //---PROPERTIES---//
-    private int screenBottom;
+    private float screenBottom;
     private int screenBorderOffset;
-    PImage[] levelImages;
+    private int groundOffset;
+    private float gravity;
+
     int[][] levelDimensions;
     int fimageW;
     int bimageW;
 
+    PImage[] levelImages;
+    
+
     //---CONSTRUCTOR---//
     Level() {
         levelImages = l.getImageArray();
+        gravity = 2;
         screenBorderOffset = 2;
+        groundOffset = 5;
         screenBottom = height-100;
         fimageW = 96;
         bimageW = 256;
@@ -49,7 +56,7 @@ class Level {
 
     private void drawGround() {
         fill(0, 0, 0);
-        rect(0, screenBottom+5, width, screenBottom);
+        rect(0, screenBottom+groundOffset, width, screenBottom);
     }
 
     private void levelOne(){
@@ -88,23 +95,25 @@ class Level {
             image(levelImages[4], 64*i, screenBottom-20, 65, 53);
         }
 
-        
-
     }
 
 
     
     private void resetPlayerPosition(){
-    if (p.getPlayerPos() > width) {
+    if (p.getPlayerXPos() > width) {
         p.setPlayerXpos(0);
       }
-    if (p.getPlayerPos() < width-width) {
+    if (p.getPlayerXPos() < width-width) {
         p.setPlayerXpos(width);
       }
     }
 
     //getters
-    public int getScreenBottom(){
+    public float getGround(){
         return screenBottom;
+    }
+
+    public float getGravity(){
+        return gravity;
     }
 }

@@ -1,7 +1,6 @@
-public class Enemy{
-
-//---PROPERTIES---//
+public class EnemyRanged {
     
+//---PROPERTIES---//
     //position
     private float xPos, yPos;
     private float pXpos;
@@ -26,17 +25,17 @@ public class Enemy{
     private int hitboxh, hitboxw;
     private int attackhitboxW;
     private boolean hit;
-
+    
     //brain
-    private float distance;
-    private float target;
+    int attackRange;
+    boolean death;
     
     //debug
     private boolean showAllFrames;
-    
+ 
 //---CONSTRUCTOR---//
     
-    Enemy() {
+    EnemyRanged() {
         //movement
         maxSpeed = 1.5;
         speedX = 0;
@@ -46,7 +45,7 @@ public class Enemy{
         enemyImages = l.getImageArray();
         loopFrames = 0;
         delay = 0;
-    
+        
         //game variables
         health = 100;
         
@@ -58,14 +57,19 @@ public class Enemy{
         
         //debug
         showAllFrames = false;
-
+        
         //starting Position
-        xPos = 600;
+        xPos = 800;
         yPos = level.getGround() - hitboxh;
         pXpos = xPos;
+
+        //brain
+        attackRange = 200;
+        attack = false;
+        
     }
     
-//---METHODS---//
+    //---METHODS---//
     
     //update character ie. update health and movement position, animation state, draw character on screen
     public void update() {
@@ -75,9 +79,8 @@ public class Enemy{
         takeDamage();
         display();
     }
-
+    
     public void display() {
-        //draw hitbox & draw character model - character model follows hitbox
         rect(xPos, yPos, hitboxw, hitboxh);
     }
     
@@ -90,27 +93,25 @@ public class Enemy{
         if (right) {
             speedX = maxSpeed;
             xPos = xPos + speedX;
-        } 
-
-        if (attack) {
-            if (directionFacing == false){
-                rect(xPos+((attackhitboxW)*-1), yPos, attackhitboxW, hitboxh);
-            }
-            else {
-                rect(xPos+hitboxw, yPos, attackhitboxW, hitboxh);
-            }
-            
         }
         
+        if (attack) {
+            if (frameCount % 260 == 0) {
+                bullet.setBulletXPos(xPos, yPos, directionFacing);
+            }
+        }
     }
 
     private void takeDamage() {
         if (hit == true) {
-            health = health - 15;
+            health = health - 1;
             hit = false;
             blood = true;
             print("\nhealth:", health);
             print("\nEnemy hit: ", hit);
+                if (health < 0){
+                    death = true;
+                }
         }
     }
     
@@ -128,26 +129,25 @@ public class Enemy{
             if (directionFacing == false) {
                 frameOffset = 44;
                 loopFrames = 0;    
-            }          
+            }       
         }
-
+        
         // attack
         if (attack) {
             if (directionFacing) {
                 frameOffset = 0;
-                loopFrames = 3;               
+                loopFrames = 3;
             }
-            else {
+            else{
                 frameOffset = 4;
                 loopFrames = 3;
             }
-
+            
             idle = false;
             right = false;
             left = false;
-            attack = true;
         }
-
+        
         //running
         if (pXpos < xPos) {
             frameOffset = 57;
@@ -155,17 +155,17 @@ public class Enemy{
             idle = false;
             directionFacing = true;
             attack = false;
-            }
-            
-            if (pXpos > xPos) {
+        }
+        
+        if (pXpos > xPos) {
             frameOffset = 65;
             loopFrames = 7;
             idle = false;
             directionFacing = false;
             attack = false;
-            }
+        }
 
-        //blood
+         //blood
         if (blood) {
             if (directionFacing) {
                 frameOffset = 37;
@@ -190,41 +190,53 @@ public class Enemy{
 
             image(enemyImages[effectcurrentFrame + effectframeOffset],xPos - 2,yPos - 15,30,30);
         }
-    
+        
         //animation delay
-         if (delay ==  0){
-             pXpos = xPos;
+        if (delay ==  0) {
+            pXpos = xPos;
         }
-
+        
         if (delay ==  0 & loopFrames >= 1) {
             currentFrame = (currentFrame + 1) % loopFrames;  
         }
-        else if (idle == true || hit == true){
+        else if (idle == true || hit == true) {
             currentFrame = 0;
         }
-
+        
         delay = (delay + 1) % 5;
+        
         image(enemyImages[(currentFrame + frameOffset)],xPos - hitboxw,yPos - 5);
     }
-
-    
     
     private void brain() {
-
-        //auto-move to player pos
-        if (p.getPlayerXPos() < xPos -(hitboxw*2)) {
+        
+        //auto - move to attack Range
+        if (p.getPlayerXPos() <= xPos - attackRange) {
             xPos = xPos - (maxSpeed);
-        }
-        else if (p.getPlayerXPos() > xPos+(hitboxw*2)) {
+            }
+        else if (p.getPlayerXPos() >= xPos + attackRange) {
             xPos = xPos + maxSpeed;
-        }
-
+            }
+        
         //attack if within range
-        if (p.getPlayerXPos() >= xPos -(hitboxw*2)) {
-            attack = true;
-        }
-        else if (p.getPlayerXPos() <= xPos -(hitboxw*2)){
-            attack = true;
+            if (p.getPlayerXPos() < xPos - attackRange) {
+                //print("\nI will attack");
+                //print("\n", xPos - attackRange);
+                //print("\nMy Position: ",xPos);
+                //print("\nplayer position: ", p.getPlayerPos());
+                attack = true;
+                }
+            else if (p.getPlayerXPos() < xPos + attackRange) {
+                //print("\nI will attack");
+                //print("\nplayer position: ", p.getPlayerPos());
+                attack = true;
+            }
+            
+    }
+
+    private void death(){
+        if (death == true){
+            print("I am dead");
         }
     }
 
@@ -233,16 +245,22 @@ public class Enemy{
         return xPos;
     }
 
-    public boolean getDirection() {
+    public boolean getDirection(){
         return directionFacing;
     }
+    
 
     //setters
     public void setHitBoxColour(int r, int g, int b,int a) {
         fill(r,g,b,a);
-    }
-
+        }
+    
     public void setHit() {
         hit = true;
     }
+
+    
+    
 }
+
+    

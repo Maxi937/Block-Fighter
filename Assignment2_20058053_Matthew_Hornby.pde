@@ -1,4 +1,3 @@
-  
 import java.io.*;
 
 //Objects required in the program
@@ -7,7 +6,9 @@ Game g;
 Loader l;
 Level level;
 Enemy enemy;
-//CollisionDetector c;
+EnemyRanged enemyRanged;
+Bullet bullet;
+CollisionDetector c;
 
 
 void setup() {

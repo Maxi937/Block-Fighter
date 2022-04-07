@@ -8,11 +8,13 @@ class Game {
     String bulletSpriteSheetDirectory;
     String birdSpriteSheetDirectory;
     String levelSpriteSheetDirectory;
+    String effectSpriteSheetDirectory;
     
     //arrays
     PImage[] playerImages;
     PImage[] enemyImages;
     PImage[] levelImages;
+    PImage[] effectImages;
     
 
 //---CONSTRUCTOR---//
@@ -24,6 +26,7 @@ class Game {
         bulletSpriteSheetDirectory = sketchPath() + "\\assets\\Spritesheets\\Bullet\\";
         birdSpriteSheetDirectory = sketchPath() + "\\assets\\Spritesheets\\Bird\\";
         levelSpriteSheetDirectory = sketchPath() + "\\assets\\Spritesheets\\Level\\";
+   
 
         playerImages = new PImage[0];
         enemyImages = new PImage[0];
@@ -43,12 +46,24 @@ class Game {
 
         //create Player Object
         playerImages = l.loadSpritesheets(playerSpriteSheetDirectory);
+        
         p = new Player();
 
         //create Enemy Object
         enemyImages = l.loadSpritesheets(playerSpriteSheetDirectory);
         enemy = new Enemy();
 
+        //create Ranged Enemy Object
+        enemyImages = l.loadSpritesheets(playerSpriteSheetDirectory);
+        enemyRanged = new EnemyRanged();
+
+        
+
+        //create Bullet Object
+        bullet = new Bullet();
+
+        //create Collision Object
+        c = new CollisionDetector();
     }
     
     //called every frame on Draw()
@@ -63,6 +78,16 @@ class Game {
         //update Enemy
         enemy.setHitBoxColour(255,0,0,50);
         enemy.update();
+
+        //update Enemy
+        enemyRanged.setHitBoxColour(255,0,0,50);
+        enemyRanged.update();
+        bullet.update();
+
+        //update Collision Detector
+        c.getHit(bullet, p);
+        c.getHit(p,enemy);
+        c.getHit(p, enemyRanged);
     }
 }
     

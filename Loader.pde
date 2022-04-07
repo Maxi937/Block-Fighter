@@ -1,9 +1,6 @@
 class Loader {
     
 //---PROPERTIES---//
-
-
-
     private String[] nameAssetFolders;
     private int numofAssetFolders;
     private int totalImages;
@@ -30,7 +27,7 @@ class Loader {
         imageArray = new PImage[0];
         
         print("\nDirectory: ", spriteSheetDirectory);
-        
+   
         numofAssetFolders = getNumOfFiles(spriteSheetDirectory);
         nameAssetFolders = getNameAssetFolders(spriteSheetDirectory);
         
@@ -50,7 +47,7 @@ class Loader {
         
         for (int i = 0; i < numofAssetFolders; i++) {
             print("\nFolder: ",nameAssetFolders[i], "\nNumber of files to load:" + getNumOfFiles(spriteSheetDirectory + nameAssetFolders[i]));
-            imageArray = loadAssets(imageArray,spriteSheetDirectory + nameAssetFolders[i], getNumOfFiles(spriteSheetDirectory + nameAssetFolders[i]));
+            imageArray = loadAssets(imageArray,spriteSheetDirectory + nameAssetFolders[i], getNumOfFiles(spriteSheetDirectory + nameAssetFolders[i]));   
         }
         
         print("\nImage Array: ");
@@ -73,15 +70,9 @@ class Loader {
         
         return imageArray;
     }
+
     
     
-    private int getNumOfFiles(String pathtofolder) {
-        String[] files;
-        File f = new File(pathtofolder);
-        files = f.list();
-        
-        return int(files.length);
-    }
     
     private void printlistoffilestoconsole(String pathtofolder)
         {
@@ -93,6 +84,15 @@ class Loader {
             print("\n", files[i]);
         }
     }
+
+        private int getNumOfFiles(String pathtofolder) {
+        String[] files;
+        File f = new File(pathtofolder);
+        files = f.list();
+        
+        return int(files.length);
+    }
+    
     
     private String[] getNameAssetFolders(String pathtofolder)
         {
@@ -110,11 +110,9 @@ class Loader {
     public PImage[] getImageArray() {
        return imageArray;
     }
-    
+
     //setters
-    public void setImageArray(PImage[] imageArray) {
-        p.playerImages = imageArray;
-    }
+  
     
     
     
