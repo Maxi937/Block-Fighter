@@ -37,6 +37,7 @@ public class CollisionDetector {
                 else {
                     //print("\nI have missed");
                     bullet.setMiss();
+                    g.setScore(20);
                 } 
             }
         }     
@@ -54,6 +55,7 @@ public class CollisionDetector {
                 if (player.getDirection() != e.getDirection()) {
                     e.setHit();
                     //print("\nI have hit an enemy");
+                    g.setScore(2);
                 }
                 
             }

@@ -1,4 +1,5 @@
-import java.io.*;
+import javax.swing.*;
+
 
 //Objects required in the program
 Player p;

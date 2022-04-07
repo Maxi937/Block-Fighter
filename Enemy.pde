@@ -20,6 +20,7 @@ public class Enemy{
     private boolean attack;
     private boolean directionFacing;
     private boolean blood;
+    private boolean death;
     private int effectframeOffset, effectloopFrames, effectcurrentFrame;
     
     //collision
@@ -43,7 +44,6 @@ public class Enemy{
         speedY = 0;
         
         //animation
-        enemyImages = l.getImageArray();
         loopFrames = 0;
         delay = 0;
     
@@ -106,11 +106,14 @@ public class Enemy{
 
     private void takeDamage() {
         if (hit == true) {
-            health = health - 15;
             hit = false;
+            health = health - 1;
             blood = true;
-            print("\nhealth:", health);
+            print("\nhealth:", this.health);
             print("\nEnemy hit: ", hit);
+                if (health < 0){
+                    death = true;
+                }
         }
     }
     
@@ -122,11 +125,11 @@ public class Enemy{
         
         if (idle == true) {
             if (directionFacing) {
-                frameOffset = 43;
+                frameOffset = 31;
                 loopFrames = 0;    
             }
             if (directionFacing == false) {
-                frameOffset = 44;
+                frameOffset = 32;
                 loopFrames = 0;    
             }          
         }
@@ -150,7 +153,7 @@ public class Enemy{
 
         //running
         if (pXpos < xPos) {
-            frameOffset = 57;
+            frameOffset = 37;
             loopFrames = 7;
             idle = false;
             directionFacing = true;
@@ -158,7 +161,7 @@ public class Enemy{
             }
             
             if (pXpos > xPos) {
-            frameOffset = 65;
+            frameOffset = 45;
             loopFrames = 7;
             idle = false;
             directionFacing = false;
@@ -168,11 +171,11 @@ public class Enemy{
         //blood
         if (blood) {
             if (directionFacing) {
-                frameOffset = 37;
+                frameOffset = 25;
                 loopFrames = 0;
             }
             if (directionFacing == false) {
-                frameOffset = 40;
+                frameOffset = 28;
                 loopFrames = 0;
             }      
             effectframeOffset = 8;
@@ -228,6 +231,12 @@ public class Enemy{
         }
     }
 
+    private void death(){
+        if (death == true){
+            print("\nI am dead");
+        }
+    }
+
     //getters
     public float getEnemyXPos(){
         return xPos;
@@ -235,6 +244,10 @@ public class Enemy{
 
     public boolean getDirection() {
         return directionFacing;
+    }
+
+    public boolean getDeath(){
+        return death;
     }
 
     //setters
@@ -245,4 +258,9 @@ public class Enemy{
     public void setHit() {
         hit = true;
     }
+
+    public void setImageArray(PImage[] imageArray){
+        enemyImages = imageArray;
+    }
+
 }

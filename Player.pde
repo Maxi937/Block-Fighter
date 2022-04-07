@@ -36,8 +36,6 @@ public class Player {
         speedY = 0;
         
         //animation
-        playerImages = l.getImageArray();
-        
         loopFrames = 0;
         delay = 0;
         directionFacing = true;
@@ -129,7 +127,7 @@ public class Player {
         }
         
         if (showAllFrames) {
-            debugdisplayspritesheet(l.getNumofImagesInArray(playerImages));
+            debugdisplayspritesheet();
         }
     }
     
@@ -147,9 +145,10 @@ public class Player {
     private void animation() {
         idle = true;
         
+        //idle
         if (idle == true) {
             if (directionFacing) {
-                frameOffset = 43;
+                frameOffset = 31;
                 loopFrames = 0;
                 if (duck) {
                     frameOffset = 23;
@@ -157,7 +156,7 @@ public class Player {
                 }    
             }
             if (directionFacing == false) {
-                frameOffset = 44;
+                frameOffset = 32;
                 loopFrames = 0; 
                 if (duck) {
                     frameOffset = 24;
@@ -185,7 +184,7 @@ public class Player {
         
         //running
         if (right) {
-            frameOffset = 57;
+            frameOffset = 37;
             loopFrames = 7;
             duck = false;
             idle = false;
@@ -194,7 +193,7 @@ public class Player {
         }
         
         if (left) {
-            frameOffset = 65;
+            frameOffset = 45;
             loopFrames = 7;
             idle = false;
             duck = false;
@@ -205,11 +204,11 @@ public class Player {
         //jumping
         if (canJump == false) {
             if (directionFacing) {
-                frameOffset = 45;
+                frameOffset = 33;
                 loopFrames = 1;
             }
             if (directionFacing == false) {
-                frameOffset = 47;
+                frameOffset = 35;
                 loopFrames = 1;
             }      
             duck = false;
@@ -220,11 +219,11 @@ public class Player {
         //blood
         if (blood) {
             if (directionFacing) {
-                frameOffset = 37;
+                frameOffset = 25;
                 loopFrames = 0;
             }
             if (directionFacing == false) {
-                frameOffset = 40;
+                frameOffset = 28;
                 loopFrames = 0;
             }      
             effectframeOffset = 8;
@@ -239,6 +238,7 @@ public class Player {
                     blood = false;
                     }
             }
+            
             image(playerImages[effectcurrentFrame + effectframeOffset],xPos - 2,yPos - 15,30,30);
         }
         
@@ -257,7 +257,7 @@ public class Player {
     }
     
     
-    private void debugdisplayspritesheet(int numofimages) {
+    private void debugdisplayspritesheet() {
         /*will display character sprite sheet on top of screen
         46x 50 was the size of each tile on the sprite sheet*/
         int scaleX = 46;
@@ -273,7 +273,7 @@ public class Player {
         row = 0;
         column = 0;
         
-        for (int i = 0; i < numofimages; i++) {
+        for (int i = 0; i < playerImages.length; i++) {
             //ifthe sprite sheet displays pass the screen size - start a new row offset by size of tile
             if (x >= width - 100) {
                 row = row + 1;
@@ -293,49 +293,6 @@ public class Player {
     
     private void jumping() {
         yPos = yPos - 50;
-    }
-    
-    //getters
-    public float getPlayerXPos() {
-        return xPos;
-    }
-    
-    public float getPlayerYPos() {
-        if (duck == true) {
-            return yPos - hitboxh / 2;
-        }
-        else {
-            return yPos;
-        }
-    }
-
-    public int getPlayerAttackBoxW() {
-        return attackhitboxW;
-    }
-
-    public int getPlayerHitBoxW() {
-        return hitboxw;
-    }
-
-    public boolean getDirection() {
-        return directionFacing;
-    }
-
-    public boolean getPlayerAttacking() {
-        return attack;
-    }
-    
-    //setters
-    public void setPlayerXpos(int xPos) {
-        this.xPos = xPos;
-    }
-    
-    public void setHitBoxColour(int r, int g, int b,int a) {
-        fill(r,g,b,a);
-    }
-    
-    public void setHit() {
-        hit = true;
     }
     
     //controls
@@ -380,5 +337,54 @@ public class Player {
             showAllFrames = false;
         }
     }
+
+    //getters
+    public float getPlayerXPos() {
+        return xPos;
+    }
+    
+    public float getPlayerYPos() {
+        if (duck == true) {
+            return yPos - hitboxh / 2;
+        }
+        else {
+            return yPos;
+        }
+    }
+
+    public int getPlayerAttackBoxW() {
+        return attackhitboxW;
+    }
+
+    public int getPlayerHitBoxW() {
+        return hitboxw;
+    }
+
+    public boolean getDirection() {
+        return directionFacing;
+    }
+
+    public boolean getPlayerAttacking() {
+        return attack;
+    }
+    
+    //setters
+    public void setPlayerXpos(int xPos) {
+        this.xPos = xPos;
+    }
+    
+    public void setHitBoxColour(int r, int g, int b,int a) {
+        fill(r,g,b,a);
+    }
+    
+    public void setHit() {
+        hit = true;
+    }
+
+    public void setImageArray(PImage[] imageArray){
+        playerImages = imageArray;
+    }
+
+
     
 }

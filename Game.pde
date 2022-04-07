@@ -1,6 +1,8 @@
 class Game {
     
 //---PROPERTIES---//
+    int score;
+    String name;
 
     //asset filepaths
     String playerSpriteSheetDirectory;
@@ -15,6 +17,7 @@ class Game {
     PImage[] enemyImages;
     PImage[] levelImages;
     PImage[] effectImages;
+ 
     
 
 //---CONSTRUCTOR---//
@@ -27,9 +30,10 @@ class Game {
         birdSpriteSheetDirectory = sketchPath() + "\\assets\\Spritesheets\\Bird\\";
         levelSpriteSheetDirectory = sketchPath() + "\\assets\\Spritesheets\\Level\\";
    
-
         playerImages = new PImage[0];
         enemyImages = new PImage[0];
+
+        score = 0;
     }
     
 //---METHODS---//
@@ -41,23 +45,25 @@ class Game {
         l = new Loader();
 
         //create Level Object
-        levelImages = l.loadSpritesheets(levelSpriteSheetDirectory);
         level = new Level();
+        levelImages = l.loadSpritesheets(levelSpriteSheetDirectory, "level", level);
+        level.setImageArray(levelImages);
 
         //create Player Object
-        playerImages = l.loadSpritesheets(playerSpriteSheetDirectory);
-        
         p = new Player();
-
+        playerImages = l.loadSpritesheets(playerSpriteSheetDirectory, "player", p);
+        p.setImageArray(playerImages);
+    
         //create Enemy Object
-        enemyImages = l.loadSpritesheets(playerSpriteSheetDirectory);
         enemy = new Enemy();
+        enemyImages = l.loadSpritesheets(playerSpriteSheetDirectory, "player", enemy);
+        enemy.setImageArray(enemyImages);
+        
 
         //create Ranged Enemy Object
-        enemyImages = l.loadSpritesheets(playerSpriteSheetDirectory);
         enemyRanged = new EnemyRanged();
-
-        
+        enemyImages = l.loadSpritesheets(playerSpriteSheetDirectory, "player", enemyRanged);
+        enemyRanged.setImageArray(enemyImages);
 
         //create Bullet Object
         bullet = new Bullet();
@@ -77,17 +83,35 @@ class Game {
 
         //update Enemy
         enemy.setHitBoxColour(255,0,0,50);
-        enemy.update();
+        if (enemy.getDeath() == false){
+                enemy.update();
+                c.getHit(p,enemy);
+            }
+
 
         //update Enemy
         enemyRanged.setHitBoxColour(255,0,0,50);
-        enemyRanged.update();
+        if (enemyRanged.getDeath() == false){
+                enemyRanged.update();
+                c.getHit(p, enemyRanged);
+                c.getHit(bullet, p);
+            }
         bullet.update();
 
         //update Collision Detector
-        c.getHit(bullet, p);
-        c.getHit(p,enemy);
-        c.getHit(p, enemyRanged);
+        print("\nScore:", score);
+    }
+
+
+    //getters
+    public int getScore(){
+        return score;
+    }
+
+
+    //setters
+    public void setScore(int s){
+        score = score + s;
     }
 }
     

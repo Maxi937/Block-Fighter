@@ -15,7 +15,6 @@ class Level {
 
     //---CONSTRUCTOR---//
     Level() {
-        levelImages = l.getImageArray();
         gravity = 2;
         screenBorderOffset = 2;
         groundOffset = 5;
@@ -35,10 +34,8 @@ class Level {
         background(20, 20, 20);
         //screenBorder();
         drawGround();
-
         //levelOne();
         levelTwo();
-
         letterBox();
     }
 
@@ -97,8 +94,6 @@ class Level {
 
     }
 
-
-    
     private void resetPlayerPosition(){
     if (p.getPlayerXPos() > width) {
         p.setPlayerXpos(0);
@@ -107,6 +102,12 @@ class Level {
         p.setPlayerXpos(width);
       }
     }
+
+    //setters
+    public void setImageArray(PImage[] imageArray){
+        levelImages = imageArray;
+    }
+
 
     //getters
     public float getGround(){
