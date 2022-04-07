@@ -105,7 +105,7 @@ public class EnemyRanged {
             hit = false;
             health = health - damageTaken;
             blood = true;
-            print("\nhealth:", this.health);
+            //print("\nhealth:", this.health);
            // print("\nEnemy hit: ", hit);
                 if (health < 0){
                     death = true;

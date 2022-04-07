@@ -30,7 +30,7 @@ public class Player {
     boolean showAllFrames;
     
 //---CONSTRUCTOR---//
-    Player(int difficulty) {
+    Player() {
         //movement
         maxSpeed = 2;
         speedX = 0;
@@ -44,7 +44,7 @@ public class Player {
         //game variables
         health = 100;
         attackDelay = 40;
-        attackDamage = (5*difficulty);
+        attackDamage = (20);
         
         //collision
         hitboxh = 40;
@@ -70,7 +70,6 @@ public class Player {
         takeDamage();
         controller();
         display();
-        print("\nblock: ", block);
     }
     
     //draw character on screen
@@ -140,7 +139,7 @@ public class Player {
             health = health - 15;
             hit = false;
             blood = true;
-            print("\nhealth:", health);
+           // print("\nhealth:", health);
             //print("\nPLayer hit: ", hit);
         }
     }
@@ -232,6 +231,7 @@ public class Player {
             right = false;
             attack = false;
             blood = false;
+            jump = false;
         }
 
         //blood

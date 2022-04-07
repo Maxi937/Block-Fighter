@@ -54,7 +54,7 @@ public class Enemy{
         onHit = false;
         
         //collision
-        hitboxh = 40;
+        hitboxh = 25;
         hitboxw = 15;
         attackhitboxW = 15;
         hit = false;
@@ -77,8 +77,9 @@ public class Enemy{
         brain();
         display();
 
-        print("\nonHit:",onHit);
-        print("\nAttack:",attack);
+        print("\nHit:",hit);
+        //print("\nonHit:",onHit);
+        //print("\nAttack:",attack);
         print("\nCan Attack:",canAttack);
     }
 
@@ -111,16 +112,15 @@ public class Enemy{
     }
 
     private void takeDamage(int damageTaken) {
-        if (hit == true) {
             hit = false;
             health = health - damageTaken;
             blood = true;
-            print("\nEnemy health:", this.health);
+            //print("\nEnemy health:", this.health);
             //print("\nEnemy hit: ", hit);
                 if (health < 0){
                     death = true;
                 }
-        }
+        
     }
     
     // animations
@@ -131,11 +131,11 @@ public class Enemy{
         
         if (idle == true) {
             if (directionFacing) {
-                frameOffset = 31;
+                frameOffset = 0;
                 loopFrames = 0;    
             }
             if (directionFacing == false) {
-                frameOffset = 32;
+                frameOffset = 4;
                 loopFrames = 0;    
             }          
         }
@@ -143,11 +143,11 @@ public class Enemy{
         // attack
         if (attack) {
             if (directionFacing) {
-                frameOffset = 0;
+                frameOffset = 9;
                 loopFrames = 3;               
             }
             else {
-                frameOffset = 4;
+                frameOffset = 14;
                 loopFrames = 3;
             }
 
@@ -159,16 +159,16 @@ public class Enemy{
 
         //running
         if (pXpos < xPos) {
-            frameOffset = 37;
-            loopFrames = 7;
+            frameOffset = 18;
+            loopFrames = 10;
             idle = false;
             directionFacing = true;
             attack = false;
             }
             
             if (pXpos > xPos) {
-            frameOffset = 45;
-            loopFrames = 7;
+            frameOffset = 29;
+            loopFrames = 10;
             idle = false;
             directionFacing = false;
             attack = false;
@@ -177,14 +177,14 @@ public class Enemy{
         //blood
         if (blood) {
             if (directionFacing) {
-                frameOffset = 25;
+                frameOffset = 1;
                 loopFrames = 0;
             }
             if (directionFacing == false) {
-                frameOffset = 28;
+                frameOffset = 5;
                 loopFrames = 0;
             }      
-            effectframeOffset = 8;
+            effectframeOffset = 39;
             effectloopFrames = 10;
             attack = false;
             right = false;
@@ -217,23 +217,6 @@ public class Enemy{
     }
     
     private void brain() {
-        if (frameCount % 200 == 0 && canAttack == false){
-            canAttack = true;
-        }
-
-        if(hit){
-            attack = false;
-            canAttack = false;
-        }
-
-        if(onHit == true) {
-            if (frameCount % 100 == 0){
-                canAttack = false;
-                attack = false;
-                onHit = false; 
-            }
-        } 
-        
         //auto-move to player pos
         if (p.getPlayerXPos() < xPos - (hitboxw*2)) {
             xPos = xPos - (maxSpeed);
@@ -242,21 +225,40 @@ public class Enemy{
             xPos = xPos + maxSpeed;
         }
 
+        if(onHit == true) {
+            if (frameCount % 70 == 0){
+                canAttack = false;
+                attack = false;
+                onHit = false; 
+            }
+        }
+
+        if(hit){
+            attack = false;
+            canAttack = false;
+        }
         //attack if within range
-            if (p.getPlayerXPos() >= xPos -(hitboxw*2)) {
-                    if (canAttack){
-                        attack = true; 
-                    }
+        if (p.getPlayerXPos() >= xPos -(hitboxw*2)) {
+                if (canAttack){
+                    attack = true; 
                 }
+            }
              
-            else if (p.getPlayerXPos() <= xPos -(hitboxw*2)){
-                    if (canAttack){
-                        attack = true;
-                    }
+        else if (p.getPlayerXPos() <= xPos -(hitboxw*2)){
+                if (canAttack){
+                    attack = true;
                 }
+            }
+
+
+        if (frameCount % 200 == 0 && canAttack == false){
+            if (hit = false){
+                canAttack = true;
+            }   
+        }
+
     }
                 
-
     private void death(){
         if (death == true){
             print("\nI am dead");

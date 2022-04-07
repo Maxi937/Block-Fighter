@@ -5,12 +5,12 @@ class Loader {
     private int totalImages;
 
     //asset filepaths
-    String playerSpriteSheetDirectory;
-    String enemySpriteSheetDirectory;
-    String bulletSpriteSheetDirectory;
-    String enemyRangedSpriteSheetDirectory;
-    String levelSpriteSheetDirectory;
-    String effectSpriteSheetDirectory;
+    private String playerSpriteSheetDirectory;
+    private String enemySpriteSheetDirectory;
+    private String bulletSpriteSheetDirectory;
+    private String enemyRangedSpriteSheetDirectory;
+    private String levelSpriteSheetDirectory;
+    private String effectSpriteSheetDirectory;
 
     //temp array
     PImage[] imageArray;
@@ -24,6 +24,7 @@ class Loader {
         bulletSpriteSheetDirectory = sketchPath() + "\\assets\\Spritesheets\\Bullet\\";
         enemyRangedSpriteSheetDirectory = sketchPath() + "\\assets\\Spritesheets\\EnemyRanged\\";
         levelSpriteSheetDirectory = sketchPath() + "\\assets\\Spritesheets\\Level\\";
+    
     }
     
 //---METHODS---//
@@ -85,7 +86,7 @@ class Loader {
     //Load Enemy Image Array
     public PImage[] loadSpritesheets(String fileName, Enemy e) {
 
-        totalImages = 53;
+        totalImages = 54;
         imageArray = new PImage[totalImages];
         print("/n-----------I am in use---------------");
 

@@ -1,15 +1,19 @@
 import javax.swing.*;
 
-
 //Objects required in the program
-Player p;
-Game g;
-Loader l;
-Level level;
-Enemy enemy;
-EnemyRanged enemyRanged;
-Bullet bullet;
-CollisionDetector c;
+Player p;                           //Manage player, animations, hit
+Game g;                             //Load Game, load assets, detect collisions between objects
+Loader l;                           //Load assets
+Level level;                        //Manage background, draw level, manage screenborders
+Enemy enemy;                        //Manage melee enemy, animations, hit, onHit
+EnemyRanged enemyRanged;            //Manage ranged enemy, animations, hit, onHit
+Bullet bullet;                      //Manage bullet, where it fires from, kills bullet
+
+//Image arrays
+    PImage[] playerImages;
+    PImage[] enemyImages;
+    PImage[] levelImages;
+    PImage[] effectImages;
 
 
 void setup() {
@@ -18,7 +22,32 @@ void setup() {
     
     //Game
     g = new Game();
-    g.loadGame();
+
+    //create Loader Object
+    l = new Loader();
+
+    //create Level Object
+    level = new Level();
+    levelImages = l.loadSpritesheets("level", level);
+    level.setImageArray(levelImages);
+
+    //create Player Object
+    p = new Player();
+    playerImages = l.loadSpritesheets("player", p);
+    p.setImageArray(playerImages);
+    
+    //create Enemy Object
+    enemy = new Enemy();
+    enemyImages = l.loadSpritesheets("enemy", enemy);
+    enemy.setImageArray(enemyImages);
+        
+    //create Ranged Enemy Object
+    enemyRanged = new EnemyRanged();
+    enemyImages = l.loadSpritesheets("player", p);
+    enemyRanged.setImageArray(enemyImages);
+
+    //create Bullet Object
+    bullet = new Bullet();
 }
 
 void draw() {
@@ -51,7 +80,7 @@ void draw() {
     //update bullet object - update bullet location, kill bullet
     bullet.update(); 
 
-    
+
     print("\nScore:", g.getScore());
 }
 

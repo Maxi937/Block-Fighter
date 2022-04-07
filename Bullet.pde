@@ -17,8 +17,7 @@ public class Bullet {
     //images
     PImage[] bulletImages;
 
-    //collision object
-    CollisionDetector c;
+
     
 
 //---CONSTRUCTOR---//

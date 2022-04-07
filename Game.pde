@@ -11,12 +11,6 @@ class Game {
     //collision
     float collisionTarget;
     float collisionDistance;
-    
-    //Image arrays
-    PImage[] playerImages;
-    PImage[] enemyImages;
-    PImage[] levelImages;
-    PImage[] effectImages;
 
 
 //---CONSTRUCTOR---//
@@ -24,46 +18,16 @@ class Game {
     Game() {
         score = 0;
         maximumLives = 0;
+        this.difficulty = difficulty;
+
     }
     
 //---METHODS---//
-    
-    //called once on Setup()
-    private void loadGame() {
-
-        //create Loader Object
-        l = new Loader();
-
-        //create Level Object
-        level = new Level();
-        levelImages = l.loadSpritesheets("level", level);
-        level.setImageArray(levelImages);
-
-        //create Player Object
-        p = new Player(difficulty);
-        playerImages = l.loadSpritesheets("player", p);
-        p.setImageArray(playerImages);
-    
-        //create Enemy Object
-        enemy = new Enemy();
-        enemyImages = l.loadSpritesheets("player", p);
-        enemy.setImageArray(enemyImages);
-        
-        //create Ranged Enemy Object
-        enemyRanged = new EnemyRanged();
-        enemyImages = l.loadSpritesheets("player", p);
-        enemyRanged.setImageArray(enemyImages);
-
-        //create Bullet Object
-        bullet = new Bullet();
-    }
-    
-    //called every frame on Draw()
     private void updateGame() {
         getHit(bullet, p);
         getHit(p, enemy);
         getHit(p, enemyRanged);
-        getHit(enemy ,p);
+        getHit(enemy, p);
     }
 
     //getters
@@ -92,13 +56,13 @@ class Game {
         if (player.getPlayerAttacking()) {
             collisionTarget = e.getEnemyXPos();
             collisionDistance = abs(player.getPlayerXPos() - collisionTarget);
-            //print("\nTarget: ", target);
-            //print("\nDX: ", distance);
+            //print("\nTarget: ", collisionTarget);
+            //print("\nDX: ", collisionDistance);
             //print("\nattackbox: ", player.getPlayerAttackBoxW());
             if (collisionDistance < player.getPlayerAttackBoxW() + player.getPlayerHitBoxW()) {
                 if (player.getDirection() != e.getDirection()) {
                     e.setHit(player.getAttackDamage());
-                    //print("\nI have hit an enemy");
+                    print("\nI have hit an enemy");
                     g.setScore(2);
                 }
                 
@@ -138,7 +102,7 @@ class Game {
                 if (e.getDirection() != player.getDirection() && p.getBlocking() == false) {
                     player.setHit();
                     e.setOnHit();
-                   //print("\nI have hit an enemy");
+                   print("\nI have hit");
                 }
                 if (p.getBlocking()) {
                     e.setOnHit();
