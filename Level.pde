@@ -6,7 +6,7 @@ class Level {
     private int groundOffset;
     private float gravity;
 
-    int[][] levelDimensions;
+    private int letterBoxSize;
     int fimageW;
     int bimageW;
 
@@ -15,6 +15,7 @@ class Level {
 
     //---CONSTRUCTOR---//
     Level() {
+        letterBoxSize = 60;
         gravity = 2;
         screenBorderOffset = 2;
         groundOffset = 5;
@@ -46,8 +47,8 @@ class Level {
 
     private void letterBox(){
         fill(0,0,0);
-        rect(0, 0, width, 60);
-        rect(0, height-60,width, 60);
+        rect(0, 0, width, letterBoxSize);
+        rect(0, height-letterBoxSize,width, letterBoxSize);
 
     }
 
@@ -112,6 +113,10 @@ class Level {
     //getters
     public float getGround(){
         return screenBottom;
+    }
+
+    public int getletterBoxSize(){
+        return letterBoxSize;
     }
 
     public float getGravity(){

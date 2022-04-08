@@ -28,6 +28,7 @@ public class EnemyRanged {
     
     //brain
     int attackRange;
+    int attackDamage;
     boolean death;
     
     //debug
@@ -35,9 +36,9 @@ public class EnemyRanged {
  
 //---CONSTRUCTOR---//
     
-    EnemyRanged() {
+    EnemyRanged(int difficulty) {
         //movement
-        maxSpeed = 1.5;
+        maxSpeed = 0.5*difficulty;
         speedX = 0;
         speedY = 0;
         
@@ -46,7 +47,8 @@ public class EnemyRanged {
         delay = 0;
         
         //game variables
-        health = 100;
+        health = 50*difficulty;
+        attackDamage = 10*difficulty;
         
         //collision
         hitboxh = 40;
@@ -63,7 +65,7 @@ public class EnemyRanged {
         pXpos = xPos;
 
         //brain
-        attackRange = 200;
+        attackRange = 250*difficulty;
         attack = false;
         
     }
@@ -105,8 +107,6 @@ public class EnemyRanged {
             hit = false;
             health = health - damageTaken;
             blood = true;
-            //print("\nhealth:", this.health);
-           // print("\nEnemy hit: ", hit);
                 if (health < 0){
                     death = true;
                 }
@@ -180,7 +180,6 @@ public class EnemyRanged {
             left = false;
             if (delay ==  0) {
                 effectcurrentFrame = (effectcurrentFrame + 1) % effectloopFrames;
-                //print("\n",effectcurrentFrame);
                     if (effectcurrentFrame == 0) {
                         blood = false;
                 }
@@ -244,6 +243,18 @@ public class EnemyRanged {
     public boolean getDeath(){
         return death;
     }
+
+    public int getEnemyAttackDamage(){
+        return attackDamage;
+    }
+
+    public int getEnemyRHealth(){
+        return health;
+    }
+
+    public int getEnemyRAttackRange(){
+        return attackRange;
+    }
     
 
     //setters
@@ -258,9 +269,7 @@ public class EnemyRanged {
     
     public void setImageArray(PImage[] imageArray){
         enemyImages = imageArray;
-    }
-
-    
+    } 
     
 }
 

@@ -8,10 +8,11 @@ public class Enemy{
     
     //game
     private int health;
+    private int damageTaken;
     
     //movement
-    private float maxSpeed, speedX, speedY;
-    private boolean left, right, up;
+    private float maxSpeed, speedX;
+    private boolean left, right;
     
     //animation properties
     private PImage[] enemyImages;
@@ -20,9 +21,6 @@ public class Enemy{
     private boolean attack;
     private boolean directionFacing;
     private boolean blood;
-    private boolean death;
-    private boolean onHit;
-    private boolean canAttack;
     private int effectframeOffset, effectloopFrames, effectcurrentFrame;
     
     //collision
@@ -33,25 +31,29 @@ public class Enemy{
     //brain
     private float distance;
     private float target;
-    
+    private boolean death;
+    private boolean onHit;
+    private int attackDamage;
+
     //debug
     private boolean showAllFrames;
     
 //---CONSTRUCTOR---//
     
-    Enemy() {
+    Enemy(int difficulty) {
         //movement
-        maxSpeed = 1.5;
+        maxSpeed = 0.5*difficulty;
         speedX = 0;
-        speedY = 0;
         
         //animation
         loopFrames = 0;
         delay = 0;
     
         //game variables
-        health = 100;
+        health = 50*difficulty;
+        attackDamage = 2*difficulty;
         onHit = false;
+        damageTaken = 0;
         
         //collision
         hitboxh = 25;
@@ -71,16 +73,17 @@ public class Enemy{
 //---METHODS---//
     
     //update character ie. update health and movement position, animation state, draw character on screen
-    public void update() {
+    public void update() {  
         animation();
         controller();
         brain();
         display();
-
-        print("\nHit:",hit);
-        //print("\nonHit:",onHit);
-        //print("\nAttack:",attack);
-        print("\nCan Attack:",canAttack);
+        println("HIT:" , hit);
+            if (death == true){
+                xPos = xPos + width;
+                death = false;
+            }
+    
     }
 
     public void display() {
@@ -113,11 +116,17 @@ public class Enemy{
 
     private void takeDamage(int damageTaken) {
             hit = false;
-            health = health - damageTaken;
+            this.damageTaken = this.damageTaken + damageTaken;
             blood = true;
-            //print("\nEnemy health:", this.health);
-            //print("\nEnemy hit: ", hit);
-                if (health < 0){
+                if(directionFacing)
+                {
+                    xPos = xPos - 40;
+                }
+                else{
+                    xPos = xPos + 40;
+                }
+
+                if (damageTaken >= health){
                     death = true;
                 }
         
@@ -225,42 +234,31 @@ public class Enemy{
             xPos = xPos + maxSpeed;
         }
 
-        if(onHit == true) {
-            if (frameCount % 70 == 0){
-                canAttack = false;
-                attack = false;
-                onHit = false; 
-            }
-        }
-
-        if(hit){
-            attack = false;
-            canAttack = false;
-        }
         //attack if within range
         if (p.getPlayerXPos() >= xPos -(hitboxw*2)) {
-                if (canAttack){
+                if (frameCount % 160 == 0){
                     attack = true; 
-                }
+                    if (frameCount%240 == 0){
+                        attack = false;
+                    }
+                }  
             }
              
         else if (p.getPlayerXPos() <= xPos -(hitboxw*2)){
-                if (canAttack){
-                    attack = true;
-                }
+                if (frameCount % 160 == 0){
+                    attack = true; 
+                    if (frameCount%240 == 0){
+                        attack = false;
+                    }
+                }     
             }
-
-
-        if (frameCount % 200 == 0 && canAttack == false){
-            if (hit = false){
-                canAttack = true;
-            }   
-        }
+        
 
     }
                 
     private void death(){
         if (death == true){
+            xPos = xPos + width;
             print("\nI am dead");
         }
     }
@@ -288,6 +286,14 @@ public class Enemy{
 
     public int getEnemyHitBoxW() {
         return hitboxw;
+    }
+
+    public int getEnemyAttackDamage(){
+        return attackDamage;
+    }
+
+    public int getEnemyHealth(){
+        return health;
     }
 
     //setters

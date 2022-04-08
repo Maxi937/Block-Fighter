@@ -1,14 +1,18 @@
 public class Player {
     
-//---PROPERTIES---//
+//---PROPERTIES---//c
+    //player
+    String playerName;
     
     //position
     float xPos, yPos;
     
     //game
-    int health;
+    int maxhealth;
+    int damageTaken;
     int attackDelay;
     int attackDamage;
+    boolean death;
     
     //movement
     float maxSpeed, speedX, speedY;
@@ -30,7 +34,10 @@ public class Player {
     boolean showAllFrames;
     
 //---CONSTRUCTOR---//
-    Player() {
+    Player(String playerName, int numberOfGames) {
+        //player
+        this.playerName = playerName;
+
         //movement
         maxSpeed = 2;
         speedX = 0;
@@ -42,9 +49,11 @@ public class Player {
         directionFacing = true;
         
         //game variables
-        health = 100;
+        maxhealth = 200/difficulty;
         attackDelay = 40;
-        attackDamage = (20);
+        attackDamage = 10/difficulty;
+        damageTaken = 0;
+        death = false;
         
         //collision
         hitboxh = 40;
@@ -67,9 +76,12 @@ public class Player {
     public void update() {
         gravityPlayer();
         animation();
-        takeDamage();
         controller();
         display();
+        death();
+        //println("death: ", death);
+        
+        //println("health: ", maxhealth);
     }
     
     //draw character on screen
@@ -90,6 +102,24 @@ public class Player {
         //This is to catch an error where sometimes the ground and yPos would be off by one due to floating point numbers. This just
         if (yPos > level.getGround() - hitboxh) {
             yPos = level.getGround() - hitboxh;  
+        }
+    }
+
+    private void death(){
+        if (damageTaken > maxhealth){
+            death = true;
+            println("I have died: ", death);
+        }
+    }
+
+    private void takeDamage(int damageDealt) {
+        if (block == false) {
+            println("take Damage");
+            println("Damage dealt:", damageDealt);
+            println("damage taken: ", damageTaken);
+            damageTaken = damageTaken + damageDealt;
+            hit = false;
+            blood = true;
         }
     }
     
@@ -131,16 +161,6 @@ public class Player {
         
         if (showAllFrames) {
             debugdisplayspritesheet();
-        }
-    }
-    
-    private void takeDamage() {
-        if (hit == true & block == false) {
-            health = health - 15;
-            hit = false;
-            blood = true;
-           // print("\nhealth:", health);
-            //print("\nPLayer hit: ", hit);
         }
     }
     
@@ -343,6 +363,10 @@ public class Player {
         if (key == ']') {
             showAllFrames = true;
         } 
+
+        if (key == 'i'){
+            g.getInstructions();
+        }
     }
     
     
@@ -401,6 +425,23 @@ public class Player {
     public int getAttackDamage(){
         return attackDamage;
     }
+
+    public int getPlayerHealth(){
+        return maxhealth;
+    }
+
+    public int getDamageTaken(){
+        return damageTaken;
+    }
+
+    public boolean getPlayerDeath(){
+        return death;
+    }
+
+    public String getPlayerName(){
+        return playerName;
+    }
+
     
     //setters
     public void setPlayerXpos(int xPos) {
@@ -411,8 +452,17 @@ public class Player {
         fill(r,g,b,a);
     }
     
-    public void setHit() {
+    public void setHit(int damageDealt) {
         hit = true;
+        takeDamage(damageDealt);
+    }
+
+    public void setDamageTaken(int damageTaken) {
+        this.damageTaken = damageTaken;
+    }
+
+    public void setPlayerDeath(boolean death){
+       this.death = death;
     }
 
     public void setImageArray(PImage[] imageArray){

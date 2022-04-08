@@ -10,7 +10,6 @@ class Loader {
     private String bulletSpriteSheetDirectory;
     private String enemyRangedSpriteSheetDirectory;
     private String levelSpriteSheetDirectory;
-    private String effectSpriteSheetDirectory;
 
     //temp array
     PImage[] imageArray;
@@ -119,6 +118,32 @@ class Loader {
         print("\nDirectory: ", enemyRangedSpriteSheetDirectory);
         print("\nTotal number of images: ",totalImages,"\n");
         path = enemyRangedSpriteSheetDirectory + "\\" + fileName;
+        print("\nPath:", path);
+        
+        print("\nLOADING IMAGES\n");
+        for (int i = 0; i < totalImages;i++) {
+            imageArray[i] = loadImage(path + nf(i,2) + ".png");
+            print(path + nf(i,2) + ".png\n"); 
+        }
+        
+        print("\nImage Array: ");
+        for (int i = 0; i < imageArray.length; i++) {
+            print("\n", "[",i,"]", imageArray[i]);
+        }
+        totalImages = 0;
+        return imageArray;
+    }
+
+    //Load Bullet Image Array
+    public PImage[] loadSpritesheets(String fileName, Bullet b) {
+
+        totalImages = 2;
+        imageArray = new PImage[totalImages];
+        print("/n-----------I am in use---------------");
+
+        print("\nDirectory: ", bulletSpriteSheetDirectory);
+        print("\nTotal number of images: ",totalImages,"\n");
+        path = bulletSpriteSheetDirectory + "\\" + fileName;
         print("\nPath:", path);
         
         print("\nLOADING IMAGES\n");

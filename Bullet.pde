@@ -17,8 +17,10 @@ public class Bullet {
     //images
     PImage[] bulletImages;
 
+    //animation
+    int bulletFrameOffset;
 
-    
+
 
 //---CONSTRUCTOR---//
 Bullet() {
@@ -30,6 +32,8 @@ Bullet() {
     
 //---METHODS---//
     public void update(){
+        animations();
+
         if (miss == true){
             killBullet();
             moveBullet();
@@ -41,16 +45,30 @@ Bullet() {
             moveBullet();
             hit();
             display();
-            //print("\nshooting: ", shooting);
         }
     }
 
-    public void display(){
+    private void display(){
         fill(0, 0, 0);
         rect(bulletxPos, bulletyPos, 10, 10);
     }
 
-    public void moveBullet(){
+    private void animations(){
+        if (shooting) {
+            if (bulletDirection) {
+                bulletFrameOffset = 1;
+            }
+            if (bulletDirection  == false) {
+                bulletFrameOffset = 0;
+            }      
+        
+        image(bulletImages[bulletFrameOffset],bulletxPos,bulletyPos-5,30,30);
+    }
+
+    }
+
+
+    private void moveBullet(){
         if (bulletDirection == true){
             bulletxPos = bulletxPos + bulletSpeed;
         }
@@ -109,6 +127,8 @@ Bullet() {
         miss = true;
     }
 
-
+    public void setImageArray(PImage[] imageArray){
+        bulletImages = imageArray;
+    }
 
 }

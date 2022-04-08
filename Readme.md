@@ -32,6 +32,9 @@ Description: Player must kill enemies and avoid blocks falling from the sky
 | --------------------------------------------------------------- | -------------- |
 | <https://opengameart.org/content/hero-spritesheets-ars-notoria> | Main Character |
 | <https://opengameart.org/content/country-side-platform-tiles>   | Level Two      |
+| <https://opengameart.org/content/lpc-wolf-animation>            | Wolf           |
+| <https://opengameart.org/content/fireballs>                     | Fireball       |
+| https://opengameart.org/content/db32-cave-tileset               | Level One      |
 
 ## TODO
 
