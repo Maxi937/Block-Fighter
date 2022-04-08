@@ -181,6 +181,7 @@ private void gameOver() {
             }
             else {
                 sessionOver();
+                exit();
             }
     }
 
