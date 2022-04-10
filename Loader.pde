@@ -1,39 +1,38 @@
 class Loader {
     
-//---PROPERTIES---//
+    //---PROPERTIES---//
     String path;
     private int totalImages;
-
+    
     //asset filepaths
     private String playerSpriteSheetDirectory;
     private String enemySpriteSheetDirectory;
     private String bulletSpriteSheetDirectory;
     private String enemyRangedSpriteSheetDirectory;
     private String levelSpriteSheetDirectory;
-
+    
     //temp array
     PImage[] imageArray;
     
     
-//---CONSTRUCTOR---//
+    //---CONSTRUCTOR---//
     
     Loader() {
         playerSpriteSheetDirectory = sketchPath() + "\\assets\\Spritesheets\\Player\\";
         enemySpriteSheetDirectory = sketchPath() + "\\assets\\Spritesheets\\Enemy\\";
         bulletSpriteSheetDirectory = sketchPath() + "\\assets\\Spritesheets\\Bullet\\";
         enemyRangedSpriteSheetDirectory = sketchPath() + "\\assets\\Spritesheets\\EnemyRanged\\";
-        levelSpriteSheetDirectory = sketchPath() + "\\assets\\Spritesheets\\Level\\";
-    
+        levelSpriteSheetDirectory = sketchPath() + "\\assets\\Spritesheets\\Level\\";    
     }
     
-//---METHODS---//
+    //---METHODS---//
     
     //Load Image Array
     public PImage[] loadSpritesheets(String fileName, Player p) {
-
+        
         totalImages = 55;
         imageArray = new PImage[totalImages];
-
+        
         print("\nDirectory: ", playerSpriteSheetDirectory);
         print("\nTotal number of images: ",totalImages,"\n");
         path = playerSpriteSheetDirectory + "\\" + fileName;
@@ -54,14 +53,14 @@ class Loader {
         return imageArray;
         
     }
-
+    
     //Load Level Image Array
     public PImage[] loadSpritesheets(String fileName, Level l) {
-
+        
         totalImages = 9;
         imageArray = new PImage[totalImages];
         print("/n-----------I am in use---------------");
-
+        
         print("\nDirectory: ", levelSpriteSheetDirectory);
         print("\nTotal number of images: ",totalImages,"\n");
         path = levelSpriteSheetDirectory + "\\" + fileName;
@@ -81,14 +80,14 @@ class Loader {
         return imageArray;
         
     }
-
+    
     //Load Enemy Image Array
     public PImage[] loadSpritesheets(String fileName, Enemy e) {
-
+        
         totalImages = 54;
         imageArray = new PImage[totalImages];
         print("/n-----------I am in use---------------");
-
+        
         print("\nDirectory: ", enemySpriteSheetDirectory);
         print("\nTotal number of images: ",totalImages,"\n");
         path = enemySpriteSheetDirectory + "\\" + fileName;
@@ -107,14 +106,14 @@ class Loader {
         totalImages = 0;
         return imageArray;   
     }
-
+    
     //Load EnemyRanged Image Array
     public PImage[] loadSpritesheets(String fileName, EnemyRanged e) {
-
+        
         totalImages = 53;
         imageArray = new PImage[totalImages];
         print("/n-----------I am in use---------------");
-
+        
         print("\nDirectory: ", enemyRangedSpriteSheetDirectory);
         print("\nTotal number of images: ",totalImages,"\n");
         path = enemyRangedSpriteSheetDirectory + "\\" + fileName;
@@ -133,14 +132,14 @@ class Loader {
         totalImages = 0;
         return imageArray;
     }
-
+    
     //Load Bullet Image Array
     public PImage[] loadSpritesheets(String fileName, Bullet b) {
-
+        
         totalImages = 2;
         imageArray = new PImage[totalImages];
         print("/n-----------I am in use---------------");
-
+        
         print("\nDirectory: ", bulletSpriteSheetDirectory);
         print("\nTotal number of images: ",totalImages,"\n");
         path = bulletSpriteSheetDirectory + "\\" + fileName;
@@ -159,13 +158,11 @@ class Loader {
         totalImages = 0;
         return imageArray;
     }
-
+    
     //getters
     public int getNumofImagesInArray(PImage[] imageArray) {
         return imageArray.length;
     }
-
-  
     
     
     

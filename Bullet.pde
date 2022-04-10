@@ -20,14 +20,18 @@ public class Bullet {
     //animation
     int bulletFrameOffset;
 
+    //bulletID
+    int bulletNumber;
+
 
 
 //---CONSTRUCTOR---//
-Bullet() {
+Bullet(int bulletNumber) {
     bulletSpeed = 7;
     shooting = false;
     hit = false;
     miss = false;
+    this.bulletNumber = bulletNumber;
 }
     
 //---METHODS---//
@@ -106,6 +110,10 @@ Bullet() {
 
     public boolean getBulletDirection() {
         return bulletDirection;
+    }
+
+    public int getBulletNumber() {
+        return bulletNumber;
     }
 
 

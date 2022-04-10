@@ -6,7 +6,8 @@ public class EnemyRanged {
     private float pXpos;
     
     //game
-    private int health;
+    private int maxHealth;
+    private int damageTaken;
     
     //movement
     private float maxSpeed, speedX, speedY;
@@ -27,18 +28,19 @@ public class EnemyRanged {
     private boolean hit;
     
     //brain
-    int attackRange;
-    int attackDamage;
+    private int attackRange;
+    private int attackDamage;
     boolean death;
+    boolean killEvent;
     
-    //debug
-    private boolean showAllFrames;
+    //bullet
+    private int bulletNumber;
  
 //---CONSTRUCTOR---//
     
-    EnemyRanged(int difficulty) {
+    EnemyRanged(int difficulty, int bulletNumber) {
         //movement
-        maxSpeed = 0.5*difficulty;
+        maxSpeed = 0.5*difficulty+(random(0,1.0));
         speedX = 0;
         speedY = 0;
         
@@ -47,7 +49,7 @@ public class EnemyRanged {
         delay = 0;
         
         //game variables
-        health = 50*difficulty;
+        maxHealth = 50*difficulty;
         attackDamage = 10*difficulty;
         
         //collision
@@ -56,18 +58,20 @@ public class EnemyRanged {
         attackhitboxW = 15;
         hit = false;
         
-        //debug
-        showAllFrames = false;
         
         //starting Position
-        xPos = 800;
+        xPos = 820+random(0,30);
         yPos = level.getGround() - hitboxh;
         pXpos = xPos;
 
         //brain
-        attackRange = 250*difficulty;
+        attackRange = 200*difficulty+int(random(0,30));
         attack = false;
-        
+        killEvent = false;
+
+        //bullet
+        this.bulletNumber = bulletNumber;
+
     }
     
     //---METHODS---//
@@ -97,20 +101,20 @@ public class EnemyRanged {
         
         if (attack) {
             if (frameCount % 160 == 0) {
-                bullet.setBulletXPos(xPos, yPos, directionFacing);
+                bullet[bulletNumber].setBulletXPos(xPos, yPos, directionFacing);
             }
         }
     }
 
     private void takeDamage(int damageTaken) {
-        if (hit == true) {
             hit = false;
-            health = health - damageTaken;
+            this.damageTaken = this.damageTaken + damageTaken;
             blood = true;
-                if (health < 0){
+                if (this.damageTaken >= maxHealth){
                     death = true;
+                    killEvent = true;
                 }
-        }
+    
     }
     
     // animations
@@ -184,7 +188,6 @@ public class EnemyRanged {
                         blood = false;
                 }
             }
-
             image(enemyImages[effectcurrentFrame + effectframeOffset],xPos - 2,yPos - 15,30,30);
         }
         
@@ -206,6 +209,7 @@ public class EnemyRanged {
     }
     
     private void brain() {
+    
         
         //auto - move to attack Range
         if (p.getPlayerXPos() <= xPos - attackRange) {
@@ -222,13 +226,15 @@ public class EnemyRanged {
             else if (p.getPlayerXPos() < xPos + attackRange) {
                 attack = true;
             }
-            
-    }
 
-    private void death(){
-        if (death == true){
-            print("\nI am dead");
-        }
+        //make enemy auto face the player
+
+            if(p.getPlayerXPos() > xPos){
+                    directionFacing = true;
+            }
+            else {
+                directionFacing = false;
+            }       
     }
 
     //getters
@@ -244,17 +250,23 @@ public class EnemyRanged {
         return death;
     }
 
+    public boolean getKillEvent(){
+        return killEvent;
+    }
+
     public int getEnemyAttackDamage(){
         return attackDamage;
     }
 
     public int getEnemyRHealth(){
-        return health;
+        return maxHealth;
     }
 
     public int getEnemyRAttackRange(){
         return attackRange;
     }
+
+
     
 
     //setters
@@ -270,6 +282,27 @@ public class EnemyRanged {
     public void setImageArray(PImage[] imageArray){
         enemyImages = imageArray;
     } 
+
+    public void setKillEvent(boolean killEvent){
+        this.killEvent = killEvent;
+    }
+
+    public void setDeath(boolean death){
+        this.death = death;
+    }
+
+    public void setBulletHit(){
+        this.death = death;
+    }
+
+    public void setXPos(float xPos){
+        this.xPos = xPos;
+    }
+
+    public void setDamageTaken(int damageTaken){
+        this.damageTaken = damageTaken;
+    }
+
     
 }
 

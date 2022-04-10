@@ -8,23 +8,33 @@ Student Number: 20058053
 
 Game Name: Block Fighter
 
-Description: Player must kill enemies and avoid blocks falling from the sky
+Description: Player must kill enemies and duck or block attacks
 
 ## Known bugs/problems
 
+sticky controls - attacks hold player in place but delay was done by framecount.
+
 ## Keystrokes/Mouse
 
-| Action     | Button   |
-| ---------- | -------- |
-| Debug Menu | Ctrl + D |
+| Action | Button |
+| ------ | ------ |
+| Left   | a      |
+| right  | d      |
+| crouch | s      |
+| jump   | w      |
+| block  | q      |
+| attack | e      |
 
 ## Sources / References
 
-| Source                                                                                    | Purpose                                               |
-| ----------------------------------------------------------------------------------------- | ----------------------------------------------------- |
-| ReNamer                                                                                   | Tool to bulk rename files, used on the sprite sheets. |
-| <https://processing.org/reference/ArrayList.html>                                         | ArrayList syntax and methods                          |
-| <https://www.programiz.com/java-programming/examples/pass-arraylist-as-function-argument> | How do I pass an Array List as a Parameter            |
+| Source                                                                                    | Purpose                                                        |
+| ----------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
+| ReNamer                                                                                   | Tool to bulk rename files, used on the sprite sheets.          |
+| <https://processing.org/reference/ArrayList.html>                                         | ArrayList syntax and methods  - did not use                    |
+| <https://www.programiz.com/java-programming/examples/pass-arraylist-as-function-argument> | How do I pass an Array List as a Parameter   - did not use     |
+| <https://processing.org/tutorials/objects>                                                | general info on objects                                        |
+| <https://www.youtube.com/watch?v=oiWmBVIu350>                                             | tutorial on how to animate sprites / move through spriteframes |
+| Pong Game                                                                                 | reused some of the code regarding the scoring                  |
 
 ### Spritesheets
 
@@ -34,62 +44,4 @@ Description: Player must kill enemies and avoid blocks falling from the sky
 | <https://opengameart.org/content/country-side-platform-tiles>   | Level Two      |
 | <https://opengameart.org/content/lpc-wolf-animation>            | Wolf           |
 | <https://opengameart.org/content/fireballs>                     | Fireball       |
-| https://opengameart.org/content/db32-cave-tileset               | Level One      |
-
-## TODO
-
-### Code
-
-- [ ] Further break down the SpriteSheet image Array so that there are points for different elements. For Example:
-  - Main Character is playerImages[0] - playerImages[18]. Would like to reference this part of the array using a SpriteSheet(mainCharacter) - this is only relevant for the debugger right now.
-  - Could add different arrays completely for different actors - this defeats the purpose of the image loader though
-
-### Music
-
-- [ ] Find Music Files:
-  - [ ] Background Music Loop
-  - [ ] Special Background Music Loop (low health or boss fight)
-  - [ ] Player
-    - [ ] Attack 1
-    - [ ] Spell 1
-    - [ ] Walking
-    - [ ] Death
-    - [ ] Jumping
-  - [ ] Enemy
-    - [ ] Attack 1
-    - [ ] Walking
-    - [ ] Death
-    - [ ] Greeting
-  
-- [ ] Extend or Duplicate loadSpritesheets(String directory) so that I can load Music Files
-
-### Player
-
-- [ ] Controller
-- [x] Movement
-- [ ] Death
-- [ ] Collision
-- [ ] Take Damage
-- [x] Move display() into update ()
-
-### Game
-
-- [ ] Score
-- [ ] Win Condition
-- [ ] Lose Condition
-- [ ] Block Falling
-- [ ] Difficulty Modifier - take input
-
-### Enemy
-
-- [x] Enemy Class
-- [ ] Sprite
-- [ ] Animations
-  - [ ] Walk
-  - [ ] Attack
-  - [ ] Death
-
-### Art
-
-- [x] Background
-- [ ] Ambience
+| <https://opengameart.org/content/db32-cave-tileset>             | Level One      |

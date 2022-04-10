@@ -7,7 +7,7 @@ public class Enemy{
     private float pXpos;
     
     //game
-    private int health;
+    private int maxHealth;
     private int damageTaken;
     
     //movement
@@ -29,20 +29,16 @@ public class Enemy{
     private boolean hit;
 
     //brain
-    private float distance;
-    private float target;
     private boolean death;
+    private boolean killEvent;
     private boolean onHit;
     private int attackDamage;
-
-    //debug
-    private boolean showAllFrames;
     
 //---CONSTRUCTOR---//
     
     Enemy(int difficulty) {
         //movement
-        maxSpeed = 0.5*difficulty;
+        maxSpeed = 0.2*difficulty+(random(0,1.0));
         speedX = 0;
         
         //animation
@@ -50,22 +46,20 @@ public class Enemy{
         delay = 0;
     
         //game variables
-        health = 50*difficulty;
+        maxHealth = 50*difficulty;
         attackDamage = 2*difficulty;
         onHit = false;
         damageTaken = 0;
+        killEvent = false;
         
         //collision
         hitboxh = 25;
         hitboxw = 15;
         attackhitboxW = 15;
         hit = false;
-        
-        //debug
-        showAllFrames = false;
 
         //starting Position
-        xPos = 600;
+        xPos = 600 + random(0, 30);;
         yPos = level.getGround() - hitboxh;
         pXpos = xPos;
     }
@@ -78,12 +72,8 @@ public class Enemy{
         controller();
         brain();
         display();
-        println("HIT:" , hit);
-            if (death == true){
-                xPos = xPos + width;
-                death = false;
-            }
-    
+        println("health:" , maxHealth - damageTaken);  
+        println("death:" , death); 
     }
 
     public void display() {
@@ -126,8 +116,9 @@ public class Enemy{
                     xPos = xPos + 40;
                 }
 
-                if (damageTaken >= health){
+                if (this.damageTaken >= maxHealth){
                     death = true;
+                    killEvent = true;
                 }
         
     }
@@ -255,13 +246,6 @@ public class Enemy{
         
 
     }
-                
-    private void death(){
-        if (death == true){
-            xPos = xPos + width;
-            print("\nI am dead");
-        }
-    }
 
     //getters
     public float getEnemyXPos(){
@@ -274,6 +258,10 @@ public class Enemy{
 
     public boolean getDeath(){
         return death;
+    }
+
+    public boolean getKillEvent(){
+        return killEvent;
     }
 
     public boolean getEnemyAttacking() {
@@ -293,7 +281,7 @@ public class Enemy{
     }
 
     public int getEnemyHealth(){
-        return health;
+        return maxHealth;
     }
 
     //setters
@@ -312,6 +300,22 @@ public class Enemy{
 
     public void setImageArray(PImage[] imageArray){
         enemyImages = imageArray;
+    }
+
+    public void setkillEvent(boolean killEvent){
+        this.killEvent = killEvent;
+    }
+
+    public void setDeath(boolean death){
+        this.death = death;
+    }
+
+    public void setXPos(float xPos){
+        this.xPos = xPos;
+    }
+
+    public void setDamageTaken(int damageTaken){
+        this.damageTaken = damageTaken;
     }
 
 

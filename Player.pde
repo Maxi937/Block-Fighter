@@ -79,9 +79,6 @@ public class Player {
         controller();
         display();
         death();
-        //println("death: ", death);
-        
-        //println("health: ", maxhealth);
     }
     
     //draw character on screen
@@ -159,9 +156,6 @@ public class Player {
             canJump = true;
         }
         
-        if (showAllFrames) {
-            debugdisplayspritesheet();
-        }
     }
     
     // animations
@@ -286,48 +280,13 @@ public class Player {
         if (delay ==  0 & loopFrames >= 1) {
             currentFrame = (currentFrame + 1) % loopFrames;
         }
-        else if (idle == true || hit == true) {
+        else if (idle == true || hit == true || block == true || duck == true) {
             currentFrame = 0;
         }
         
         delay = (delay + 1) % 5;
         
         image(playerImages[(currentFrame + frameOffset)],xPos - hitboxw,yPos - 5);
-    }
-    
-    
-    private void debugdisplayspritesheet() {
-        /*will display character sprite sheet on top of screen
-        46x 50 was the size of each tile on the sprite sheet*/
-        int scaleX = 46;
-        int scaleY = 50;
-        
-        float y;
-        float x;
-        int row;
-        int column;
-        
-        x = scaleX;
-        y = 0;
-        row = 0;
-        column = 0;
-        
-        for (int i = 0; i < playerImages.length; i++) {
-            //ifthe sprite sheet displays pass the screen size - start a new row offset by size of tile
-            if (x >= width - 100) {
-                row = row + 1;
-                column = 0;
-            }
-            column = column + 1;
-            
-            x = column * scaleX;
-            y = scaleY * row;
-            
-            //Draw Shape
-            image(playerImages[i],x,y);
-            fill(200, 0, 0);
-            text(i,x,y + 12);
-        }
     }
     
     private void jumping() {
@@ -365,7 +324,7 @@ public class Player {
         } 
 
         if (key == 'i'){
-            g.getInstructions();
+            getInstructions();
         }
     }
     
@@ -383,10 +342,19 @@ public class Player {
             block = false;
         }
         
-        if (key ==  ']') {
-            showAllFrames = false;
+        if (key ==  'i') {
+            getInstructions();
         }
     }
+
+     public void getInstructions() {
+        JOptionPane.showMessageDialog(null, "Controls: " +
+            "\n Use 'a' to move left" +
+            "\n Use 'd' to move right" +
+            "\n Use 'q' to block" +
+            "\n Use 'e' to attack"+
+            "\n Use 'space' to jump");
+    }   
 
     //getters
     public float getPlayerXPos() {
@@ -426,7 +394,7 @@ public class Player {
         return attackDamage;
     }
 
-    public int getPlayerHealth(){
+    public int getPlayerMaxHealth(){
         return maxhealth;
     }
 

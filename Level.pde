@@ -1,37 +1,37 @@
 class Level {
-     
+    
     //---PROPERTIES---//
     private float screenBottom;
     private int screenBorderOffset;
     private int groundOffset;
     private float gravity;
-
+    
     private int letterBoxSize;
     int fimageW;
     int bimageW;
-
+    
     PImage[] levelImages;
     
-
+    
     //---CONSTRUCTOR---//
     Level() {
         letterBoxSize = 60;
         gravity = 2;
         screenBorderOffset = 2;
         groundOffset = 5;
-        screenBottom = height-100;
+        screenBottom = height - 100;
         fimageW = 96;
         bimageW = 256;
     }
     
     //---METHODS---//
-     public void update(){
-         display();
-         resetPlayerPosition();
-     }
-
-
-    public void display(){
+    public void update() {
+        display();
+        resetPlayerPosition();
+}
+    
+    
+    public void display() {
         background(20, 20, 20);
         //screenBorder();
         drawGround();
@@ -39,87 +39,87 @@ class Level {
         levelTwo();
         letterBox();
     }
-
+    
     private void screenBorder() {
         fill(0, 255,0, 50);
-        rect(screenBorderOffset, 0, width - (screenBorderOffset*2), screenBottom);
+        rect(screenBorderOffset, 0, width - (screenBorderOffset * 2), screenBottom);
     }
-
-    private void letterBox(){
+    
+    private void letterBox() {
         fill(0,0,0);
         rect(0, 0, width, letterBoxSize);
-        rect(0, height-letterBoxSize,width, letterBoxSize);
-
+        rect(0, height - letterBoxSize,width, letterBoxSize);
+        
     }
-
+    
     private void drawGround() {
         fill(0, 0, 0);
-        rect(0, screenBottom+groundOffset, width, screenBottom);
+        rect(0, screenBottom + groundOffset, width, screenBottom);
     }
-
-    private void levelOne(){
-
+    
+    private void levelOne() {
+        
         //background
-        for (int i = 0; i < width/bimageW; ++i) {
-           image(levelImages[7], bimageW*i, screenBottom-69, 256,75);
+        for (int i = 0; i < width / bimageW; ++i) {
+            image(levelImages[7], bimageW * i, screenBottom - 69, 256,75);
         }
-
+        
         //foreground
-        for (int i = 0; i < width/fimageW+1; ++i) {
-            image(levelImages[5], fimageW*i, screenBottom, 96, 103);
+        for (int i = 0; i < width / fimageW + 1; ++i) {
+            image(levelImages[5], fimageW * i, screenBottom, 96, 103);
         }
-
+        
     }
-
-     private void levelTwo(){
-
+    
+    private void levelTwo() {
+        
         //background
-        for (int i = 0; i < width/384+1; ++i) {
-        image(levelImages[0],384*i, screenBottom-450, 384,224);
+        for (int i = 0; i < width / 384 + 1; ++i) {
+            image(levelImages[0],384 * i, screenBottom - 450, 384,224);
         }
-
-
-        for (int i = 0; i < width/160+1; ++i) {
-        image(levelImages[1], 160*i, screenBottom-340, 160,224);
-        image(levelImages[1], 160*i, screenBottom-280, 160,224);
-        image(levelImages[1], 160*i, screenBottom-200, 160,224);
+        
+        
+        for (int i = 0; i < width / 160 + 1; ++i) {
+            image(levelImages[1], 160 * i, screenBottom - 340, 160,224);
+            image(levelImages[1], 160 * i, screenBottom - 280, 160,224);
+            image(levelImages[1], 160 * i, screenBottom - 200, 160,224);
         }
-
-        image(levelImages[3], 0, screenBottom-190, 384,224);
-           
-
+        
+        image(levelImages[3], 0, screenBottom - 190, 384,224);
+        
+        
         //foreground
-        for (int i = 0; i < width/65+1; ++i) {
-            image(levelImages[4], 64*i, screenBottom-20, 65, 53);
+        for (int i = 0; i < width / 65 + 1; ++i) {
+            image(levelImages[4], 64 * i, screenBottom - 20, 65, 53);
         }
-
+        
     }
-
-    private void resetPlayerPosition(){
-    if (p.getPlayerXPos() > width) {
-        p.setPlayerXpos(0);
-      }
-    if (p.getPlayerXPos() < width-width) {
-        p.setPlayerXpos(width);
-      }
+    
+    private void resetPlayerPosition() {
+        if (p.getPlayerXPos() > width) {
+            p.setPlayerXpos(0);
     }
-
+        if (p.getPlayerXPos() < width - width) {
+            p.setPlayerXpos(width);
+    }
+    }
+    
     //setters
-    public void setImageArray(PImage[] imageArray){
+    public void setImageArray(PImage[] imageArray) {
         levelImages = imageArray;
     }
-
-
+    
+    
     //getters
-    public float getGround(){
+    public float getGround() {
         return screenBottom;
     }
-
-    public int getletterBoxSize(){
+    
+    public int getletterBoxSize() {
         return letterBoxSize;
     }
-
-    public float getGravity(){
+    
+    public float getGravity() {
         return gravity;
     }
 }
