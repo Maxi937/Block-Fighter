@@ -1,14 +1,12 @@
 # Readme
 
-Name : Matthew Hornby
+Windows Only
 
-Student Number: 20058053
+## Description
 
-## Brief description of the game developed 1/2 sentences
+Block Fighter
 
-Game Name: Block Fighter
-
-Description: Player must kill enemies and duck or block attacks
+Player must kill enemies and duck or block attacks
 
 ## Known bugs/problems
 
@@ -25,16 +23,6 @@ sticky controls - attacks hold player in place but delay was done by framecount.
 | block  | q      |
 | attack | e      |
 
-## Sources / References
-
-| Source                                                                                    | Purpose                                                        |
-| ----------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
-| ReNamer                                                                                   | Tool to bulk rename files, used on the sprite sheets.          |
-| <https://processing.org/reference/ArrayList.html>                                         | ArrayList syntax and methods  - did not use                    |
-| <https://www.programiz.com/java-programming/examples/pass-arraylist-as-function-argument> | How do I pass an Array List as a Parameter   - did not use     |
-| <https://processing.org/tutorials/objects>                                                | general info on objects                                        |
-| <https://www.youtube.com/watch?v=oiWmBVIu350>                                             | tutorial on how to animate sprites / move through spriteframes |
-| Pong Game                                                                                 | reused some of the code regarding the scoring                  |
 
 ### Spritesheets
 
